@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mukrite Energies — Uganda's Gas Supply Specialists</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ─── CSS VARIABLES ─────────────────────────────────────── */
+:root {
+  --green:        #0A5C36;
+  --green-mid:    #0D7A49;
+  --green-light:  #12A362;
+  --green-glow:   rgba(10,92,54,0.18);
+  --green-subtle: rgba(10,92,54,0.06);
+  --red:          #D42B2B;
+  --red-dark:     #A81E1E;
+  --red-glow:     rgba(212,43,43,0.22);
+  --white:        #FFFFFF;
+  --off-white:    #F6F8F5;
+  --slate:        #3D4A42;
+  --slate-light:  #6B7A71;
+  --border:       rgba(10,92,54,0.12);
+  --border-dark:  rgba(10,92,54,0.22);
+  --ff-display: 'Archivo Black', sans-serif; /* Heavy, bold, industrial pipe-style */
+--ff-serif:   'Fraunces', serif;           /* High-contrast, sharp, editorial */
+--ff-body:    'Inter', sans-serif;         /* The gold standard for clean UI */
+  --shadow-sm:    0 2px 12px rgba(10,92,54,0.1);
+  --shadow-md:    0 8px 32px rgba(10,92,54,0.14);
+  --shadow-lg:    0 20px 60px rgba(10,92,54,0.18);
+}
+
+/* ─── RESET ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: var(--slate);
+  font-family: var(--ff-body);
+  font-weight: 400;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* ─── SCROLLBAR ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--off-white); }
+::-webkit-scrollbar-thumb { background: var(--green); border-radius: 2px; }
+
+/* ─── NAV ────────────────────────────────────────────────── */
+#navbar {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  padding: 20px 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+#navbar.scrolled {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  padding: 12px 5%;
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-mark {
+ 
+  
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s;
+}
+.nav-logo-mark:hover { transform: rotate(-8deg) scale(1.05); }
+.nav-logo-mark svg { color: #fff; }
+.nav-brand-name {
+  font-family: var(--ff-display);
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  transition: color 0.4s;
+  line-height: 1.1;
+}
+.nav-brand-name span {
+  display: block;
+  font-size: 0.55rem; font-weight: 500;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  opacity: 0.75;
+}
+#navbar.scrolled .nav-brand-name { color: var(--green); }
+.nav-links { display: flex; gap: 0; list-style: none; }
+.nav-link-item a {
+  font-family: var(--ff-display);
+  font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  padding: 8px 16px;
+  position: relative;
+  transition: color 0.3s;
+  display: block;
+}
+#navbar.scrolled .nav-link-item a { color: var(--slate); }
+.nav-link-item a::after {
+  content: '';
+  position: absolute; bottom: 2px; left: 16px; right: 16px;
+  height: 2px; background: var(--green-light);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  border-radius: 2px;
+}
+.nav-link-item a:hover::after,
+.nav-link-item a.active::after { transform: scaleX(1); }
+.nav-link-item a:hover { color: var(--white); }
+#navbar.scrolled .nav-link-item a:hover { color: var(--green); }
+.nav-cta {
+  padding: 10px 24px;
+  background: var(--red);
+  color: #fff !important;
+  font-family: var(--ff-display);
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: 6px;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s !important;
+  box-shadow: 0 4px 14px var(--red-glow);
+}
+.nav-cta:hover {
+  background: var(--red-dark) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 24px var(--red-glow) !important;
+}
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px;
+}
+.hamburger span {
+  width: 24px; height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: 0.3s;
+  display: block;
+}
+#navbar.scrolled .hamburger span { background: var(--slate); }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed; top: 0; right: 0;
+  width: 100%; height: 100vh;
+  background: var(--green);
+  z-index: 999;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2rem;
+  transform: translateX(100%);
+  transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu a {
+  font-family: var(--ff-display);
+  font-size: 2rem; font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.06em;
+  transition: color 0.3s;
+}
+.mobile-menu a:hover { color: #fff; }
+.mobile-menu-close {
+  position: absolute; top: 1.5rem; right: 5%;
+  background: none; border: none; cursor: pointer;
+  color: rgba(255,255,255,0.7); font-size: 1.8rem;
+  transition: color 0.3s;
+}
+.mobile-menu-close:hover { color: #fff; }
+
+/* ─── HERO ─────────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.hero-bg-img {
+  position: absolute; inset: 0;
+  background: url('samples.jpeg') center/cover no-repeat;
+  filter: brightness(0.35) saturate(1.2);
+}
+.hero-bg-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(135deg, rgba(10,92,54,0.75) 0%, rgba(5,35,20,0.6) 55%, rgba(0,0,0,0.45) 100%);
+}
+.hero-noise {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 120px 5% 60px;
+  max-width: 820px;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 1.8rem;
+  opacity: 0; animation: heroFadeUp 0.7s 0.2s ease forwards;
+}
+.hero-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-light); }
+.hero-title {
+  font-family: var(--ff-display);
+  font-size: clamp(3.2rem, 7.5vw, 7rem);
+  font-weight: 800;
+  line-height: 0.92;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: heroFadeUp 0.8s 0.4s ease forwards;
+}
+.hero-title .accent {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--green-light);
+  display: block;
+}
+.hero-desc {
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  color: rgba(255,255,255,0.72);
+  max-width: 520px; line-height: 1.75;
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: heroFadeUp 0.8s 0.6s ease forwards;
+}
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; animation: heroFadeUp 0.8s 0.8s ease forwards;
+}
+.btn-pulse {
+  padding: 16px 36px;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--ff-display);
+  font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: 8px; border: none; cursor: pointer;
+  position: relative; overflow: hidden;
+  box-shadow: 0 0 0 0 var(--red-glow);
+  animation: ctaPulse 2.2s ease-in-out 1.5s infinite;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.btn-pulse:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px var(--red-glow);
+  animation: none;
+}
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,43,43,0.5); }
+  50% { box-shadow: 0 0 0 14px rgba(212,43,43,0); }
+}
+.btn-outline-white {
+  padding: 15px 32px;
+  background: transparent;
+  color: #fff;
+  font-family: var(--ff-display);
+  font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s, transform 0.2s;
+  display: flex; align-items: center; gap: 8px;
+}
+.btn-outline-white:hover {
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+/* Ripple Effect */
+.ripple-btn { position: relative; overflow: hidden; }
+.ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.35); transform: scale(0); animation: rippleAnim 0.6s linear; pointer-events: none; }
+@keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+.hero-stats {
+  display: flex; gap: 0;
+  margin-top: 4rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px; overflow: hidden;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(12px);
+  opacity: 0; animation: heroFadeUp 0.8s 1.0s ease forwards;
+  max-width: 540px;
+}
+.hero-stat {
+  flex: 1; padding: 1.2rem 1.4rem;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num {
+  font-family: var(--ff-display);
+  font-size: 1.6rem; font-weight: 800;
+  color: var(--green-light);
+  display: block; line-height: 1;
+}
+.hero-stat-lbl {
+  font-size: 0.65rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55);
+  margin-top: 4px;
+}
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  z-index: 2;
+  opacity: 0; animation: heroFadeUp 0.8s 1.2s ease forwards;
+}
+.hero-scroll span {
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.scroll-mouse {
+  width: 22px; height: 34px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 11px;
+  position: relative;
+}
+.scroll-mouse::after {
+  content: '';
+  position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+  width: 3px; height: 6px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 3px;
+  animation: scrollDot 1.6s ease-in-out infinite;
+}
+@keyframes scrollDot { 0%,100%{top:5px;opacity:1} 60%{top:14px;opacity:0.2} }
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── TICKER ────────────────────────────────────────────── */
+.ticker-section {
+  background: var(--green);
+  padding: 0; overflow: hidden;
+  border-top: 3px solid var(--red);
+}
+.ticker-inner {
+  display: flex;
+  animation: tickerRoll 22s linear infinite;
+  white-space: nowrap;
+}
+.ticker-item {
+  flex-shrink: 0;
+  padding: 1rem 2.5rem;
+  font-family: var(--ff-display);
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  display: flex; align-items: center; gap: 12px;
+  border-right: 1px solid rgba(255,255,255,0.12);
+}
+.ticker-item .bullet {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--red); flex-shrink: 0;
+}
+.ticker-item.highlight { color: #fff; }
+@keyframes tickerRoll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ─── SECTION SHARED ────────────────────────────────────── */
+section { padding: 7rem 5%; }
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--ff-display);
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+.section-eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--green); border-radius: 2px; }
+.section-title {
+  font-family: var(--ff-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 800; line-height: 1;
+  color: var(--green);
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.section-title em {
+  font-family: var(--ff-serif);
+  font-style: italic; font-weight: 400;
+  color: var(--red);
+}
+.section-desc {
+  font-size: 1rem; color: var(--slate-light);
+  max-width: 480px; line-height: 1.8;
+}
+
+/* ─── SERVICES PREVIEW ──────────────────────────────────── */
+#services-preview { background: var(--white); }
+.services-intro {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 2rem; margin-bottom: 4rem;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+}
+.service-card {
+  background: var(--white);
+  padding: 2.8rem 2.4rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.3,1);
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+.service-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--green-subtle) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.service-card:hover::before { opacity: 1; }
+.service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); z-index: 2; }
+.service-card-icon {
+  width: 56px; height: 56px;
+  background: var(--green-subtle);
+  border: 1px solid var(--border-dark);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.8rem;
+  color: var(--green);
+  font-size: 1.4rem;
+  transition: background 0.3s, color 0.3s;
+}
+.service-card:hover .service-card-icon {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.service-card-tag {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--red); font-weight: 600; font-family: var(--ff-display);
+  margin-bottom: 0.6rem;
+}
+.service-card-title {
+  font-family: var(--ff-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--green); margin-bottom: 0.8rem; line-height: 1.2;
+}
+.service-card-desc {
+  font-size: 0.88rem; color: var(--slate-light);
+  line-height: 1.7; margin-bottom: 1.8rem;
+}
+.service-card-link {
+  font-family: var(--ff-display);
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--green);
+  display: flex; align-items: center; gap: 6px;
+  transition: gap 0.3s;
+}
+.service-card:hover .service-card-link { gap: 12px; }
+.service-card-num {
+  position: absolute; top: 2rem; right: 2rem;
+  font-family: var(--ff-display);
+  font-size: 3.5rem; font-weight: 800;
+  color: var(--border);
+  line-height: 1;
+  transition: color 0.4s;
+  user-select: none;
+}
+.service-card:hover .service-card-num { color: rgba(10,92,54,0.08); }
+
+/* ─── CALCULATOR ────────────────────────────────────────── */
+#calculator { background: var(--green); position: relative; overflow: hidden; }
+.calc-bg-pattern {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(18,163,98,0.15) 0%, transparent 50%);
+}
+.calc-grid-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.calc-layout {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.calc-left .section-eyebrow { color: var(--green-light); }
+.calc-left .section-eyebrow::before { background: var(--green-light); }
+.calc-left .section-title { color: #fff; }
+.calc-left .section-title em { color: #FFD580; }
+.calc-left .section-desc { color: rgba(255,255,255,0.65); max-width: 400px; }
+.calc-features { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.calc-feature {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 0.9rem; color: rgba(255,255,255,0.8);
+}
+.calc-feature i { color: var(--green-light); font-size: 0.9rem; }
+
+.calc-panel {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 20px;
+  padding: 2.8rem;
+  backdrop-filter: blur(10px);
+}
+.calc-panel-title {
+  font-family: var(--ff-display);
+  font-size: 1.1rem; font-weight: 700;
+  color: #fff; letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.calc-panel-title i { color: var(--green-light); }
+
+.calc-group { margin-bottom: 2rem; }
+.calc-label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.82rem; color: rgba(255,255,255,0.65);
+  margin-bottom: 0.7rem; font-family: var(--ff-display);
+  font-weight: 500; letter-spacing: 0.05em;
+}
+.calc-label-value {
+  font-family: var(--ff-display);
+  font-size: 1rem; font-weight: 700; color: #FFD580;
+}
+.calc-slider {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 5px;
+  background: rgba(255,255,255,0.15); border-radius: 5px; outline: none;
+  cursor: pointer;
+  background-image: linear-gradient(var(--green-light), var(--green-light));
+  background-repeat: no-repeat;
+}
+.calc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--green-light);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+.calc-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+.calc-results {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 2rem;
+}
+.calc-result-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 1.2rem;
+  text-align: center;
+  transition: background 0.3s;
+}
+.calc-result-card:hover { background: rgba(255,255,255,0.12); }
+.calc-result-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.calc-result-num {
+  font-family: var(--ff-display);
+  font-size: 1.5rem; font-weight: 800;
+  color: #fff; line-height: 1;
+  margin-bottom: 0.3rem;
+  transition: all 0.3s;
+}
+.calc-result-num.green { color: var(--green-light); }
+.calc-result-lbl {
+  font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ─── REGIONS ───────────────────────────────────────────── */
+#regions { background: var(--off-white); }
+.regions-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  margin-bottom: 4rem;
+}
+.regions-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+}
+.region-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 2rem 1.6rem;
+  transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
+  cursor: pointer; position: relative; overflow: hidden;
+}
+.region-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--green);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s;
+}
+.region-card:hover::after { transform: scaleX(1); }
+.region-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-dark);
+}
+.region-icon {
+  font-size: 1.8rem; margin-bottom: 1rem;
+}
+.region-name {
+  font-family: var(--ff-display);
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--green); margin-bottom: 0.5rem;
+}
+.region-desc {
+  font-size: 0.8rem; color: var(--slate-light); line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+.region-cities {
+  display: flex; flex-wrap: wrap; gap: 5px;
+}
+.region-city-tag {
+  padding: 3px 9px;
+  background: var(--green-subtle);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.63rem; letter-spacing: 0.1em;
+  color: var(--green); font-weight: 500;
+}
+
+/* ─── WHY MURKIT ────────────────────────────────────────── */
+#why { background: var(--white); }
+.why-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.why-img-wrap {
+  position: relative;
+}
+.why-img-main {
+  width: 100%; aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 16px;
+  filter: saturate(0.9);
+}
+.why-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(10,92,54,0.4));
+  border-radius: 16px;
+}
+.why-badge {
+  position: absolute; bottom: 2rem; left: -2rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.2rem 1.6rem;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--shadow-md);
+}
+.why-badge-icon { font-size: 1.8rem; }
+.why-badge-num {
+  font-family: var(--ff-display);
+  font-size: 1.8rem; font-weight: 800; color: var(--green); line-height: 1;
+}
+.why-badge-text { font-size: 0.7rem; color: var(--slate-light); text-transform: uppercase; letter-spacing: 0.1em; }
+.why-accent-box {
+  position: absolute; top: 2rem; right: -1.5rem;
+  width: 40%; aspect-ratio: 1;
+  background: var(--green-subtle);
+  border: 2px solid var(--border-dark);
+  border-radius: 12px;
+  z-index: -1;
+}
+.why-features { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+.why-feature {
+  display: flex; gap: 1.2rem; align-items: flex-start;
+  padding: 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.why-feature:hover {
+  border-color: var(--green-light);
+  background: var(--green-subtle);
+}
+.why-feature-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: var(--green-subtle);
+  border: 1px solid var(--border-dark);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green); font-size: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+.why-feature:hover .why-feature-icon { background: var(--green); color: #fff; }
+.why-feature-title { font-family: var(--ff-display); font-weight: 700; font-size: 0.95rem; color: var(--green); margin-bottom: 0.3rem; }
+.why-feature-desc { font-size: 0.82rem; color: var(--slate-light); line-height: 1.6; }
+
+/* ─── PARTNERS TICKER ───────────────────────────────────── */
+.partners-section { background: var(--off-white); padding: 5rem 5%; }
+.partners-header { text-align: center; margin-bottom: 3rem; }
+.partners-label {
+  font-family: var(--ff-display);
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--slate-light); margin-bottom: 0.5rem;
+}
+.partners-track-wrap { overflow: hidden; }
+.partners-track {
+  display: flex; gap: 0;
+  animation: partnerScroll 18s linear infinite;
+  white-space: nowrap;
+}
+.partner-logo {
+  flex-shrink: 0;
+  padding: 1.5rem 3rem;
+  border-right: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.partner-logo-text {
+  font-family: var(--ff-display);
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--slate-light);
+  opacity: 0.5;
+  transition: opacity 0.3s, color 0.3s;
+}
+.partner-logo:hover .partner-logo-text { opacity: 1; color: var(--green); }
+@keyframes partnerScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ─── CTA BANNER ────────────────────────────────────────── */
+#cta-banner {
+  background: var(--green);
+  position: relative; overflow: hidden; text-align: center;
+  padding: 7rem 5%;
+}
+.cta-glow {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 700px; height: 400px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(18,163,98,0.25), transparent 65%);
+  pointer-events: none;
+}
+.cta-banner-title {
+  font-family: var(--ff-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800; color: #fff; line-height: 0.95;
+  margin-bottom: 1.2rem; position: relative; z-index: 2;
+}
+.cta-banner-title em { font-family: var(--ff-serif); font-style: italic; color: #FFD580; }
+.cta-banner-sub {
+  color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.7;
+  max-width: 480px; margin: 0 auto 2.5rem; position: relative; z-index: 2;
+}
+.cta-banner-btns {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  position: relative; z-index: 2;
+}
+.btn-white {
+  padding: 15px 36px;
+  background: #fff; color: var(--green);
+  font-family: var(--ff-display); font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: 8px; border: none; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+.btn-outline-green-light {
+  padding: 14px 32px;
+  background: transparent; color: rgba(255,255,255,0.85);
+  font-family: var(--ff-display); font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.3); cursor: pointer;
+  transition: border-color 0.3s, background 0.3s, transform 0.2s;
+}
+.btn-outline-green-light:hover {
+  border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+
+/* ─── FOOTER ────────────────────────────────────────────── */
+footer {
+  background: #041810;
+  color: rgba(255,255,255,0.6);
+  padding: 5rem 5% 2rem;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  margin-bottom: 4rem;
+}
+.footer-brand-name {
+  font-family: var(--ff-display); font-size: 1.5rem; font-weight: 800;
+  color: #fff; letter-spacing: 0.04em; margin-bottom: 0.3rem;
+}
+.footer-brand-sub {
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green-light); margin-bottom: 1rem;
+}
+.footer-brand-desc {
+  font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.5); max-width: 280px;
+}
+.footer-socials { display: flex; gap: 10px; margin-top: 1.5rem; }
+.footer-social {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.5); font-size: 0.85rem;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.footer-social:hover { background: var(--green); color: #fff; border-color: var(--green); }
+.footer-col-title {
+  font-family: var(--ff-display); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: #fff; margin-bottom: 1.4rem;
+}
+.footer-links { display: flex; flex-direction: column; gap: 0.7rem; }
+.footer-links a {
+  font-size: 0.85rem; color: rgba(255,255,255,0.5);
+  transition: color 0.3s; display: flex; align-items: center; gap: 6px;
+}
+.footer-links a:hover { color: var(--green-light); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-copy { font-size: 0.78rem; }
+.footer-made { font-size: 0.78rem; }
+.footer-made span { color: var(--green-light); }
+
+/* ─── REVEAL ANIMATIONS ─────────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(36px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left {
+  opacity: 0; transform: translateX(-36px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right {
+  opacity: 0; transform: translateX(36px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+
+/* ─── RESPONSIVE ────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .regions-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .calc-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .why-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .regions-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .why-badge { left: 0; }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .hero-stats { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .regions-grid { grid-template-columns: 1fr 1fr; }
+  section { padding: 5rem 5%; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+@media (max-width: 480px) {
+  .calc-results { grid-template-columns: 1fr; }
+  .regions-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileClose"><i class="fa-solid fa-xmark"></i></button>
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="services.html" onclick="closeMobile()">Services</a>
+  <a href="about.html" onclick="closeMobile()">About</a>
+  <a href="contact.html" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- ─── NAV ────────────────────────────────────────────── -->
+<nav id="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-logo-mark">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <img src="lofo.png" alt="">
+      </svg>
+    </div>
+    <div class="nav-brand-name">
+      Mukrite Energies
+      <span>Gas Supply · Uganda</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li class="nav-link-item"><a href="index.html" class="active">Home</a></li>
+    <li class="nav-link-item"><a href="services.html">Services</a></li>
+    <li class="nav-link-item"><a href="about.html">About</a></li>
+    <li class="nav-link-item"><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta ripple-btn">Get a Quote</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-bg-overlay"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      Uganda's Trusted Gas Partner
+    </div>
+    <h1 class="hero-title">
+      Powering Every<br>
+      <span class="accent">Ugandan Home</span>
+    </h1>
+    <p class="hero-desc">
+      Premium gas supply, cylinder refilling, and bulk delivery across all regions of Uganda.
+      Wholesale and retail for homes, businesses, and industry.
+    </p>
+    <div class="hero-actions">
+      <a href="contact.html" class="btn-pulse ripple-btn">Order Gas Now</a>
+      <a href="services.html" class="btn-outline-white ripple-btn">
+        <i class="fa-solid fa-fire-burner"></i>
+        Our Services
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">10K+</span>
+        <span class="hero-stat-lbl">Cylinders Filled</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">5</span>
+        <span class="hero-stat-lbl">Uganda Regions</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">48hr</span>
+        <span class="hero-stat-lbl">Delivery Time</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-mouse"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ─── TICKER ──────────────────────────────────────────── -->
+<div class="ticker-section">
+  <div class="ticker-inner" id="ticker">
+    <div class="ticker-item highlight"><span class="bullet"></span> LPG Cylinders</div>
+    <div class="ticker-item"><span class="bullet"></span> 6kg · 12kg · 50kg</div>
+    <div class="ticker-item highlight"><span class="bullet"></span> Cylinder Refilling</div>
+    <div class="ticker-item"><span class="bullet"></span> Bulk Industrial Supply</div>
+    <div class="ticker-item highlight"><span class="bullet"></span> Wholesale &amp; Retail</div>
+    <div class="ticker-item"><span class="bullet"></span> Kampala Delivery</div>
+    <div class="ticker-item highlight"><span class="bullet"></span> Nationwide Coverage</div>
+    <div class="ticker-item"><span class="bullet"></span> Safety Certified</div>
+    <div class="ticker-item highlight"><span class="bullet"></span> LPG Cylinders</div>
+    <div class="ticker-item"><span class="bullet"></span> 6kg · 12kg · 50kg</div>
+    <div class="ticker-item highlight"><span class="bullet"></span> Cylinder Refilling</div>
+    <div class="ticker-item"><span class="bullet"></span> Bulk Industrial Supply</div>
+    <div class="ticker-item highlight"><span class="bullet"></span> Wholesale &amp; Retail</div>
+    <div class="ticker-item"><span class="bullet"></span> Kampala Delivery</div>
+    <div class="ticker-item highlight"><span class="bullet"></span> Nationwide Coverage</div>
+    <div class="ticker-item"><span class="bullet"></span> Safety Certified</div>
+  </div>
+</div>
+
+<!-- ─── SERVICES PREVIEW ─────────────────────────────────── -->
+<section id="services-preview">
+  <div class="services-intro reveal">
+    <div>
+      <div class="section-eyebrow">What We Offer</div>
+      <h2 class="section-title">Gas Solutions<br>for <em>Every Need</em></h2>
+    </div>
+    <a href="services.html" class="btn-outline-white" style="color: var(--green); border-color: var(--border-dark); display:inline-flex; align-items: center; gap:8px;">
+      All Services <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-d1">
+      <span class="service-card-num"></span>
+      <div class="service-card-icon"><i class="fa-solid fa-house-chimney"></i></div>
+      <div class="service-card-tag">Residential</div>
+      <h3 class="service-card-title">Home Gas Supply</h3>
+      <p class="service-card-desc">Reliable LPG cylinder delivery for households across Uganda. Available in 6kg and 12kg sizes. Never run out of cooking gas again.</p>
+      <a href="services.html" class="service-card-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal reveal-d2">
+      <span class="service-card-num"></span>
+      <div class="service-card-icon"><i class="fa-solid fa-store"></i></div>
+      <div class="service-card-tag">Commercial</div>
+      <h3 class="service-card-title">Business & Hospitality</h3>
+      <p class="service-card-desc">Bulk gas supply for restaurants, hotels, schools, and institutions. Flexible delivery schedules and competitive wholesale pricing.</p>
+      <a href="services.html" class="service-card-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal reveal-d3">
+      <span class="service-card-num"></span>
+      <div class="service-card-icon"><i class="fa-solid fa-industry"></i></div>
+      <div class="service-card-tag">Industrial</div>
+      <h3 class="service-card-title">Industrial Gas Bulk</h3>
+      <p class="service-card-desc">High-volume 50kg cylinder supply for manufacturing, construction, and processing facilities with dedicated account managers.</p>
+      <a href="services.html" class="service-card-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal reveal-d1">
+      <span class="service-card-num"></span>
+      <div class="service-card-icon"><i class="fa-solid fa-rotate"></i></div>
+      <div class="service-card-tag">Refilling</div>
+      <h3 class="service-card-title">Cylinder Refill Service</h3>
+      <p class="service-card-desc">Fast, safe refilling of all standard LPG cylinders at our depots. Bring your empty cylinder — walk out with a full one.</p>
+      <a href="services.html" class="service-card-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal reveal-d2">
+      <span class="service-card-num"></span>
+      <div class="service-card-icon"><i class="fa-solid fa-truck-fast"></i></div>
+      <div class="service-card-tag">Logistics</div>
+      <h3 class="service-card-title">Doorstep Delivery</h3>
+      <p class="service-card-desc">Schedule a delivery at your convenience. Our fleet covers Kampala and surrounding districts with tracked, on-time delivery.</p>
+      <a href="services.html" class="service-card-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal reveal-d3">
+      <span class="service-card-num"></span>
+      <div class="service-card-icon"><i class="fa-solid fa-handshake"></i></div>
+      <div class="service-card-tag">Wholesale</div>
+      <h3 class="service-card-title">Wholesale Distribution</h3>
+      <p class="service-card-desc">Partner with Mukrite as a sub-dealer or distributor. Access preferential pricing, credit terms, and supply priority for your region.</p>
+      <a href="contact.html" class="service-card-link">Become a Partner <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CALCULATOR ───────────────────────────────────────── -->
+<section id="calculator">
+  <div class="calc-bg-pattern"></div>
+  <div class="calc-grid-lines"></div>
+  <div class="calc-layout">
+    <div class="calc-left reveal-left">
+      <div class="section-eyebrow">Smart Estimator</div>
+      <h2 class="section-title" style="color:#fff;">Calculate Your<br><em>Gas Budget</em></h2>
+      <p class="section-desc" style="color:rgba(255,255,255,0.65);">Use our simple calculator to estimate your monthly gas cost, how many cylinders you need, and potential savings when switching to a Mukrite bulk plan.</p>
+      <div class="calc-features">
+        <div class="calc-feature"><i class="fa-solid fa-check-circle"></i> Transparent pricing — no hidden fees</div>
+        <div class="calc-feature"><i class="fa-solid fa-check-circle"></i> Wholesale discounts from 10 cylinders/month</div>
+        <div class="calc-feature"><i class="fa-solid fa-check-circle"></i> Free delivery for orders above 5 cylinders</div>
+        <div class="calc-feature"><i class="fa-solid fa-check-circle"></i> Prices updated weekly to reflect market rates</div>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="calc-panel">
+        <div class="calc-panel-title">
+          <i class="fa-solid fa-calculator"></i>
+          Gas Cost Estimator
+        </div>
+
+        <div class="calc-group">
+          <div class="calc-label">
+            <span>Cylinder Size</span>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="size-btn active" data-size="6" onclick="setSize(this,6)">6 kg</button>
+            <button class="size-btn" data-size="12" onclick="setSize(this,12)">12 kg</button>
+            <button class="size-btn" data-size="50" onclick="setSize(this,50)">50 kg</button>
+          </div>
+        </div>
+
+        <div class="calc-group">
+          <div class="calc-label">
+            <span>Cylinders per Month</span>
+            <span class="calc-label-value" id="cylCount">3</span>
+          </div>
+          <input type="range" class="calc-slider" id="cylSlider" min="1" max="50" value="3" oninput="updateCalc()">
+          <div style="display:flex;justify-content:space-between;margin-top:5px;">
+            <span style="font-size:0.65rem;color:rgba(255,255,255,0.4);">1 cylinder</span>
+            <span style="font-size:0.65rem;color:rgba(255,255,255,0.4);">50 cylinders</span>
+          </div>
+        </div>
+
+        <div class="calc-group">
+          <div class="calc-label">
+            <span>Usage Type</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="type-btn active" data-disc="0" onclick="setType(this,0)">Retail</button>
+            <button class="type-btn" data-disc="0.07" onclick="setType(this,0.07)">Wholesale (7%)</button>
+            <button class="type-btn" data-disc="0.12" onclick="setType(this,0.12)">Bulk Deal (12%)</button>
+          </div>
+        </div>
+
+        <div class="calc-results">
+          <div class="calc-result-card">
+            
+            <div class="calc-result-num green" id="res-cost">UGX 0</div>
+            <div class="calc-result-lbl">Monthly Cost</div>
+          </div>
+          <div class="calc-result-card">
+            
+            <div class="calc-result-num" id="res-savings">UGX 0</div>
+            <div class="calc-result-lbl">You Save</div>
+          </div>
+          <div class="calc-result-card">
+            
+            <div class="calc-result-num" id="res-kg">0 kg</div>
+            <div class="calc-result-lbl">Gas per Month</div>
+          </div>
+          <div class="calc-result-card">
+            
+            <div class="calc-result-num" id="res-deliveries">0</div>
+            <div class="calc-result-lbl">Deliveries</div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <a href="contact.html" class="btn-pulse ripple-btn" style="display:block;text-align:center;border:none;cursor:pointer;font-family:var(--ff-display);font-size:0.8rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:14px;border-radius:10px;background:var(--red);">
+            Order at This Rate <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REGIONS ──────────────────────────────────────────── -->
+<section id="regions">
+  <div class="regions-header">
+    <div class="reveal">
+      <div class="section-eyebrow">Coverage Map</div>
+      <h2 class="section-title">We Are All Over<br><em>Uganda</em></h2>
+    </div>
+    <div class="reveal reveal-d1">
+      <p class="section-desc">Mukrite Energies operates across all major regions of Uganda, with distribution hubs in key cities and reliable last-mile delivery networks.</p>
+      <img src="map.jpeg" alt="Mukrite Energies — We are all over Uganda" style="margin-top:1.5rem;border-radius:12px;width:100%;max-width:380px;box-shadow:0 8px 32px rgba(10,92,54,0.14);">
+    </div>
+  </div>
+  <div class="regions-grid">
+    <div class="region-card reveal reveal-d1">
+      
+      <div class="region-name">Central Region</div>
+      <div class="region-desc">Our headquarters and primary distribution hub. Fastest delivery times in the region.</div>
+      <div class="region-cities">
+        <span class="region-city-tag">Kampala</span>
+        <span class="region-city-tag">Entebbe</span>
+        <span class="region-city-tag">Wakiso</span>
+        <span class="region-city-tag">Mukono</span>
+      </div>
+    </div>
+    <div class="region-card reveal reveal-d2">
+      
+      <div class="region-name">Eastern Region</div>
+      <div class="region-desc">Serving the bustling commercial towns of eastern Uganda with bulk and retail gas.</div>
+      <div class="region-cities">
+        <span class="region-city-tag">Jinja</span>
+        <span class="region-city-tag">Mbale</span>
+        <span class="region-city-tag">Tororo</span>
+        <span class="region-city-tag">Soroti</span>
+      </div>
+    </div>
+    <div class="region-card reveal reveal-d3">
+      
+      <div class="region-name">Western Region</div>
+      <div class="region-desc">Reliable supply to western districts including tourist and hospitality sectors.</div>
+      <div class="region-cities">
+        <span class="region-city-tag">Mbarara</span>
+        <span class="region-city-tag">Fort Portal</span>
+        <span class="region-city-tag">Kasese</span>
+        <span class="region-city-tag">Kabale</span>
+      </div>
+    </div>
+    <div class="region-card reveal reveal-d4">
+      
+      <div class="region-name">Northern Region</div>
+      <div class="region-desc">Expanding coverage serving homes and businesses across northern Uganda.</div>
+      <div class="region-cities">
+        <span class="region-city-tag">Gulu</span>
+        <span class="region-city-tag">Lira</span>
+        <span class="region-city-tag">Arua</span>
+        <span class="region-city-tag">Kitgum</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHY MURKIT ───────────────────────────────────────── -->
+<section id="why">
+  <div class="why-layout">
+    <div class="why-img-wrap reveal-left">
+      <img class="why-img-main"
+        src="workers.jpeg"
+        alt="Mukrite Energies worker inspecting cylinders at warehouse">
+      <div class="why-img-overlay"></div>
+      <div class="why-badge">
+        
+        <div>
+          <div class="why-badge-num">8+ Yrs</div>
+          <div class="why-badge-text">In Operation</div>
+        </div>
+      </div>
+      <div class="why-accent-box"></div>
+    </div>
+    <div class="reveal-right">
+      <div class="section-eyebrow">Why Choose Us</div>
+      <h2 class="section-title">The Mukrite<br><em>Promise</em></h2>
+      <p class="section-desc" style="margin-bottom:0;">We don't just sell gas. We build long-term energy partnerships rooted in safety, reliability, and fair pricing for every Ugandan.</p>
+      <div class="why-features">
+        <div class="why-feature">
+          <div class="why-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <div class="why-feature-title">Safety First</div>
+            <div class="why-feature-desc">All cylinders are pressure-tested and meet UNBS standards before every refill. Our staff are trained gas-handling professionals.</div>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-feature-icon"><i class="fa-solid fa-tags"></i></div>
+          <div>
+            <div class="why-feature-title">Best Market Prices</div>
+            <div class="why-feature-desc">We offer the most competitive rates in Uganda with volume discounts for wholesale buyers and loyalty rewards for regular customers.</div>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-feature-icon"><i class="fa-solid fa-clock"></i></div>
+          <div>
+            <div class="why-feature-title">Always On Time</div>
+            <div class="why-feature-desc">Our logistics network guarantees delivery within 24–48 hours across Kampala and within 72 hours to upcountry locations.</div>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-feature-icon"><i class="fa-solid fa-headset"></i></div>
+          <div>
+            <div class="why-feature-title">Dedicated Support</div>
+            <div class="why-feature-desc">Call, WhatsApp, or visit our depots. A real person picks up. Account managers are assigned to all wholesale clients.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CYLINDER SAFETY ──────────────────────────────────── -->
+<section id="cylinder-safety" style="background:var(--off-white);">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" class="why-layout">
+    <div class="reveal-left">
+      <div class="section-eyebrow">Safe Usage Guide</div>
+      <h2 class="section-title">How to Place<br><em>Your Cylinder</em></h2>
+      <p class="section-desc" style="margin-bottom:2rem;">Your safety is our priority. Every Mukrite Energies cylinder comes with clear usage guidance. Follow these simple rules to use your gas safely at home or at work.</p>
+      <div class="why-features">
+        <div class="why-feature">
+          <div class="why-feature-icon"><i class="fa-solid fa-arrow-up"></i></div>
+          <div>
+            <div class="why-feature-title">Vertical, Valve Upwards</div>
+            <div class="why-feature-desc">Always store and use the cylinder upright with the valve facing upwards. Never lay it on its side.</div>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-feature-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+          <div>
+            <div class="why-feature-title">Away from Heat Sources</div>
+            <div class="why-feature-desc">Keep the cylinder away from any source of heat, open flame, or direct sunlight at all times.</div>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-feature-icon"><i class="fa-solid fa-wind"></i></div>
+          <div>
+            <div class="why-feature-title">Well-Ventilated Area</div>
+            <div class="why-feature-desc">Place the cylinder on or above ground level with adequate ventilation and in an easily accessible position.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-img-wrap reveal-right">
+      <img class="why-img-main" style="aspect-ratio:1/1;object-fit:contain;background:#fff;border-radius:16px;padding:1rem;"
+        src="how to.jpeg"
+        alt="How to place a Mukrite Energies LPG cylinder safely">
+      <div class="why-badge" style="left:auto;right:-1.5rem;bottom:2rem;">
+        
+        <div>
+          <div class="why-badge-num">UNBS</div>
+          <div class="why-badge-text">Safety Certified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PARTNERS ─────────────────────────────────────────── -->
+<div class="partners-section reveal">
+  <div class="partners-header">
+    <div class="partners-label">Trusted by businesses across Uganda</div>
+  </div>
+  <div class="partners-track-wrap">
+    <div class="partners-track">
+      <div class="partner-logo"><div class="partner-logo-text">Rolex Chapati Co.</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Hotel Africana</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Nakumatt Foods</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Kampala Bakeries</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Uganda Breweries</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Jinja Resorts</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Central Foods Ltd</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Mbarara Caterers</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Rolex Chapati Co.</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Hotel Africana</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Nakumatt Foods</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Kampala Bakeries</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Uganda Breweries</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Jinja Resorts</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Central Foods Ltd</div></div>
+      <div class="partner-logo"><div class="partner-logo-text">Mbarara Caterers</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CTA BANNER ───────────────────────────────────────── -->
+<section id="cta-banner">
+  <div class="cta-glow"></div>
+  <div class="reveal">
+    <h2 class="cta-banner-title">Ready to Order<br><em>Gas Today?</em></h2>
+    <p class="cta-banner-sub">Join thousands of homes and businesses across Uganda who trust Mukrite Energies for consistent, safe, and affordable gas supply.</p>
+    <div class="cta-banner-btns">
+      <a href="contact.html" class="btn-white ripple-btn">Order Now</a>
+      <a href="tel:+256700000000" class="btn-outline-green-light ripple-btn">
+        <i class="fa-solid fa-phone"></i> Call Us: +256 700 000 000
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Mukrite Energies</div>
+      <div class="footer-brand-sub">Gas Supply Specialists · Uganda</div>
+      <p class="footer-brand-desc">Uganda's trusted source for LPG cylinder supply, refilling, and bulk gas delivery. Serving homes, businesses, and industry since 2016.</p>
+      <div class="footer-socials">
+        <a class="footer-social" href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a class="footer-social" href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a class="footer-social" href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        <a class="footer-social" href="#"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <div class="footer-links">
+        <a href="services.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> Home Gas Supply</a>
+        <a href="services.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> Cylinder Refilling</a>
+        <a href="services.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> Commercial Supply</a>
+        <a href="services.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> Industrial Bulk Gas</a>
+        <a href="services.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> Wholesale Distribution</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-links">
+        <a href="about.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> About Us</a>
+        <a href="about.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> Our Regions</a>
+        <a href="contact.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> Become a Dealer</a>
+        <a href="contact.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;color:var(--green-light)"></i> Contact Us</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-links">
+        <a href="tel:+256700000000"><i class="fa-solid fa-phone" style="font-size:0.7rem;color:var(--green-light)"></i> +256 700 000 000</a>
+        <a href="mailto:info@mukriteenergies.com"><i class="fa-solid fa-envelope" style="font-size:0.7rem;color:var(--green-light)"></i> info@mukriteenergies.com</a>
+        <a href="#"><i class="fa-solid fa-location-dot" style="font-size:0.7rem;color:var(--green-light)"></i> Plot 14, Nakawa Industrial, Kampala</a>
+        <a href="#"><i class="fa-brands fa-whatsapp" style="font-size:0.7rem;color:var(--green-light)"></i> WhatsApp Order Line</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024 Mukrite Energies Ltd. All rights reserved.</div>
+    <div class="footer-made">Built for <span>Uganda 🇺🇬</span></div>
+  </div>
+</footer>
+
+<!-- CALCULATOR BUTTON STYLES -->
+<style>
+.size-btn, .type-btn {
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.65);
+  font-family: var(--ff-display); font-size: 0.78rem;
+  font-weight: 600; letter-spacing: 0.06em;
+  border-radius: 6px; cursor: pointer;
+  transition: all 0.25s;
+}
+.size-btn:hover, .type-btn:hover {
+  background: rgba(255,255,255,0.14);
+  color: #fff; border-color: rgba(255,255,255,0.3);
+}
+.size-btn.active, .type-btn.active {
+  background: var(--green-light);
+  border-color: var(--green-light);
+  color: #fff;
+}
+</style>
+
+<script>
+/* ── NAV SCROLL ──────────────────────────────────────── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── MOBILE MENU ─────────────────────────────────────── */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileClose = document.getElementById('mobileClose');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileClose.addEventListener('click', closeMobile);
+function closeMobile() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+
+/* ── RIPPLE ──────────────────────────────────────────── */
+document.querySelectorAll('.ripple-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+    this.appendChild(r);
+    setTimeout(() => r.remove(), 600);
+  });
+});
+
+/* ── SCROLL REVEAL ───────────────────────────────────── */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+/* ── CALCULATOR ──────────────────────────────────────── */
+// Prices in UGX
+const PRICES = { 6: 35000, 12: 68000, 50: 260000 };
+let currentSize = 6;
+let currentDiscount = 0;
+
+function setSize(btn, size) {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentSize = size;
+  updateCalc();
+}
+function setType(btn, discount) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentDiscount = discount;
+  updateCalc();
+}
+
+function animateNum(el, newVal, prefix = '', suffix = '') {
+  const current = parseFloat(el.dataset.val || 0);
+  const diff = newVal - current;
+  const steps = 25;
+  let step = 0;
+  const timer = setInterval(() => {
+    step++;
+    const val = current + diff * (step / steps);
+    if (prefix === 'UGX ') {
+      el.textContent = prefix + Math.round(val).toLocaleString();
+    } else {
+      el.textContent = Math.round(val) + suffix;
+    }
+    if (step >= steps) {
+      clearInterval(timer);
+      el.dataset.val = newVal;
+    }
+  }, 14);
+}
+
+function updateCalc() {
+  const slider = document.getElementById('cylSlider');
+  const count = parseInt(slider.value);
+  document.getElementById('cylCount').textContent = count;
+
+  // Update slider fill
+  const pct = ((count - 1) / 49) * 100;
+  slider.style.backgroundSize = pct + '% 100%';
+
+  const basePrice = PRICES[currentSize];
+  const totalBase = basePrice * count;
+  const discount = Math.round(totalBase * currentDiscount);
+  const finalCost = totalBase - discount;
+  const totalKg = currentSize * count;
+  const deliveries = count <= 5 ? 1 : Math.ceil(count / 5);
+
+  animateNum(document.getElementById('res-cost'), finalCost, 'UGX ', '');
+  animateNum(document.getElementById('res-savings'), discount, 'UGX ', '');
+  document.getElementById('res-kg').textContent = totalKg + ' kg';
+  document.getElementById('res-deliveries').textContent = deliveries;
+}
+updateCalc(); // init
+
+/* ── CARD 3D TILT ────────────────────────────────────── */
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotX = ((y - cy) / cy) * -5;
+    const rotY = ((x - cx) / cx) * 5;
+    card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+</script>
+</body>
+</html>
