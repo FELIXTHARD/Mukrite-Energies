@@ -289,33 +289,75 @@ a { text-decoration: none; color: inherit; }
 .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.35); transform: scale(0); animation: rippleAnim 0.6s linear; pointer-events: none; }
 @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
 
-.hero-stats {
-  display: flex; gap: 0;
-  margin-top: 4rem;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 12px; overflow: hidden;
-  background: rgba(0,0,0,0.25);
-  backdrop-filter: blur(12px);
+/* ─── PHOTO MARQUEE STRIP ───────────────────────────────── */
+.hero-album {
+  margin-top: 3.5rem;
   opacity: 0; animation: heroFadeUp 0.8s 1.0s ease forwards;
-  max-width: 540px;
+  /* Break out of hero-content's max-width to span full hero width */
+  width: 100vw;
+  position: relative;
+  left: -5vw; /* offset by hero-content padding */
+  overflow: hidden;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
 }
-.hero-stat {
-  flex: 1; padding: 1.2rem 1.4rem;
-  border-right: 1px solid rgba(255,255,255,0.1);
-  text-align: center;
+.album-track-wrap {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: albumMarquee 28s linear infinite;
+  will-change: transform;
 }
-.hero-stat:last-child { border-right: none; }
-.hero-stat-num {
-  font-family: var(--ff-display);
-  font-size: 1.6rem; font-weight: 800;
-  color: var(--green-light);
-  display: block; line-height: 1;
+.album-track-wrap:hover { animation-play-state: paused; }
+@keyframes albumMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
-.hero-stat-lbl {
-  font-size: 0.65rem; letter-spacing: 0.18em;
-  text-transform: uppercase; color: rgba(255,255,255,0.55);
-  margin-top: 4px;
+.album-card {
+  flex-shrink: 0;
+  width: 200px;
+  height: 140px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity 0.35s, transform 0.35s;
+  position: relative;
 }
+.album-card:hover {
+  opacity: 0.88;
+  transform: scale(1.04) translateY(-3px);
+}
+.album-card-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.album-card:hover .album-card-img { transform: scale(1.06); }
+/* Gradient placeholders for when images are absent */
+.album-card.ph-1 { background: linear-gradient(135deg,#0a5c36,#12a362); }
+.album-card.ph-2 { background: linear-gradient(135deg,#1a3a2a,#0d7a49); }
+.album-card.ph-3 { background: linear-gradient(135deg,#0d4028,#0a5c36); }
+.album-card.ph-4 { background: linear-gradient(135deg,#1c2b1f,#2e6b44); }
+.album-card.ph-5 { background: linear-gradient(135deg,#0f1f14,#185c38); }
+.album-card.ph-6 { background: linear-gradient(135deg,#061a0e,#0d7a49); }
+/* Hover caption overlay */
+.album-card-caption {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end;
+  padding: 10px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  pointer-events: none;
+}
+.album-card:hover .album-card-caption { opacity: 1; }
 .hero-scroll {
   position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -792,6 +834,136 @@ section { padding: 7rem 5%; }
   transform: translateY(-2px);
 }
 
+/* ─── ORDER MODAL ───────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(4,24,16,0.72);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.modal-overlay.open {
+  opacity: 1; pointer-events: all;
+}
+.modal-box {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%; max-width: 380px;
+  max-height: 92vh; overflow-y: auto;
+  padding: 1.6rem 1.6rem 1.3rem;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+  transform: translateY(28px) scale(0.97);
+  transition: transform 0.38s cubic-bezier(0.34,1.3,0.64,1);
+}
+.modal-overlay.open .modal-box {
+  transform: translateY(0) scale(1);
+}
+.modal-close {
+  position: absolute; top: 0.9rem; right: 1rem;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--off-white); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--slate); font-size: 0.75rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.modal-close:hover { background: #e8ede9; transform: rotate(90deg); }
+.modal-eyebrow {
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--green-light); font-weight: 600; margin-bottom: 0.25rem;
+}
+.modal-title {
+  font-family: var(--ff-display);
+  font-size: 1.25rem; font-weight: 800; color: var(--green); line-height: 1.15;
+  margin-bottom: 0.2rem;
+}
+.modal-sub {
+  font-size: 0.73rem; color: var(--slate-light); margin-bottom: 1.1rem; line-height: 1.4;
+}
+.order-form { display: flex; flex-direction: column; gap: 0.65rem; }
+.form-row { display: flex; flex-direction: column; gap: 0.65rem; }
+.form-field { display: flex; flex-direction: column; gap: 3px; }
+.form-field label {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--slate);
+}
+.form-field input,
+.form-field select {
+  padding: 8px 11px;
+  border: 1.5px solid var(--border-dark);
+  border-radius: 8px;
+  font-size: 0.82rem; color: var(--slate);
+  font-family: var(--ff-body);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  appearance: none; -webkit-appearance: none;
+}
+.form-field input:focus,
+.form-field select:focus {
+  border-color: var(--green-light);
+  box-shadow: 0 0 0 3px rgba(18,163,98,0.12);
+}
+.form-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%230A5C36' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 11px center;
+  padding-right: 28px;
+  cursor: pointer;
+}
+.modal-divider {
+  text-align: center; font-size: 0.62rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--slate-light);
+  margin: 0.2rem 0;
+  position: relative;
+}
+.modal-divider::before, .modal-divider::after {
+  content: ''; position: absolute; top: 50%;
+  width: 38%; height: 1px; background: var(--border);
+}
+.modal-divider::before { left: 0; }
+.modal-divider::after { right: 0; }
+.modal-actions { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.4rem; }
+.btn-order-email {
+  width: 100%; padding: 11px;
+  background: var(--green); color: #fff;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: var(--ff-display); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 14px rgba(10,92,54,0.22);
+}
+.btn-order-email:hover { background: var(--green-mid); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10,92,54,0.28); }
+.btn-order-wa {
+  width: 100%; padding: 11px;
+  background: #25D366; color: #fff;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: var(--ff-display); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: background 0.25s, transform 0.2s;
+}
+.btn-order-wa:hover { background: #1ebe5d; transform: translateY(-2px); }
+.modal-note {
+  text-align: center; font-size: 0.65rem; color: var(--slate-light);
+  margin-top: 0.6rem; line-height: 1.4;
+}
+@media (max-width: 480px) {
+  .modal-box {
+    max-width: 100%; border-radius: 14px;
+    padding: 1.2rem 1.1rem 1rem;
+  }
+  .modal-title { font-size: 1.1rem; }
+  .modal-sub { font-size: 0.68rem; margin-bottom: 0.9rem; }
+  .form-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .form-field input, .form-field select { padding: 7px 9px; font-size: 0.78rem; }
+  .btn-order-email, .btn-order-wa { padding: 10px; font-size: 0.7rem; }
+  .order-form { gap: 0.55rem; }
+}
+
 /* ─── FOOTER ────────────────────────────────────────────── */
 footer {
   background: #041810;
@@ -924,7 +1096,7 @@ footer {
     <li class="nav-link-item"><a href="about.html">About</a></li>
     <li class="nav-link-item"><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="contact.html" class="nav-cta ripple-btn">Get a Quote</a>
+  <a onclick="openOrderModal()" class="nav-cta ripple-btn">ORDER NOW</a>
   <div class="hamburger" id="hamburger">
     <span></span><span></span><span></span>
   </div>
@@ -949,24 +1121,16 @@ footer {
       Wholesale and retail for homes, businesses, and industry.
     </p>
     <div class="hero-actions">
-      <a href="contact.html" class="btn-pulse ripple-btn">Order Gas Now</a>
+      <a onclick="openOrderModal()" class="btn-pulse ripple-btn">Order Gas Now</a>
       <a href="services.html" class="btn-outline-white ripple-btn">
         <i class="fa-solid fa-fire-burner"></i>
         Our Services
       </a>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="hero-stat-num">10K+</span>
-        <span class="hero-stat-lbl">Cylinders Filled</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">5</span>
-        <span class="hero-stat-lbl">Uganda Regions</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">48hr</span>
-        <span class="hero-stat-lbl">Delivery Time</span>
+    <!-- Photo Marquee Strip -->
+    <div class="hero-album" id="heroAlbum">
+      <div class="album-track-wrap" id="albumTrack">
+        <!-- Cards injected by JS (doubled for seamless loop) -->
       </div>
     </div>
   </div>
@@ -1061,95 +1225,7 @@ footer {
   </div>
 </section>
 
-<!-- ─── CALCULATOR ───────────────────────────────────────── -->
-<section id="calculator">
-  <div class="calc-bg-pattern"></div>
-  <div class="calc-grid-lines"></div>
-  <div class="calc-layout">
-    <div class="calc-left reveal-left">
-      <div class="section-eyebrow">Smart Estimator</div>
-      <h2 class="section-title" style="color:#fff;">Calculate Your<br><em>Gas Budget</em></h2>
-      <p class="section-desc" style="color:rgba(255,255,255,0.65);">Use our simple calculator to estimate your monthly gas cost, how many cylinders you need, and potential savings when switching to a Mukrite bulk plan.</p>
-      <div class="calc-features">
-        <div class="calc-feature"><i class="fa-solid fa-check-circle"></i> Transparent pricing — no hidden fees</div>
-        <div class="calc-feature"><i class="fa-solid fa-check-circle"></i> Wholesale discounts from 10 cylinders/month</div>
-        <div class="calc-feature"><i class="fa-solid fa-check-circle"></i> Free delivery for orders above 5 cylinders</div>
-        <div class="calc-feature"><i class="fa-solid fa-check-circle"></i> Prices updated weekly to reflect market rates</div>
-      </div>
-    </div>
-    <div class="reveal-right">
-      <div class="calc-panel">
-        <div class="calc-panel-title">
-          <i class="fa-solid fa-calculator"></i>
-          Gas Cost Estimator
-        </div>
 
-        <div class="calc-group">
-          <div class="calc-label">
-            <span>Cylinder Size</span>
-          </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="size-btn active" data-size="6" onclick="setSize(this,6)">6 kg</button>
-            <button class="size-btn" data-size="12" onclick="setSize(this,12)">12 kg</button>
-            <button class="size-btn" data-size="50" onclick="setSize(this,50)">50 kg</button>
-          </div>
-        </div>
-
-        <div class="calc-group">
-          <div class="calc-label">
-            <span>Cylinders per Month</span>
-            <span class="calc-label-value" id="cylCount">3</span>
-          </div>
-          <input type="range" class="calc-slider" id="cylSlider" min="1" max="50" value="3" oninput="updateCalc()">
-          <div style="display:flex;justify-content:space-between;margin-top:5px;">
-            <span style="font-size:0.65rem;color:rgba(255,255,255,0.4);">1 cylinder</span>
-            <span style="font-size:0.65rem;color:rgba(255,255,255,0.4);">50 cylinders</span>
-          </div>
-        </div>
-
-        <div class="calc-group">
-          <div class="calc-label">
-            <span>Usage Type</span>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="type-btn active" data-disc="0" onclick="setType(this,0)">Retail</button>
-            <button class="type-btn" data-disc="0.07" onclick="setType(this,0.07)">Wholesale (7%)</button>
-            <button class="type-btn" data-disc="0.12" onclick="setType(this,0.12)">Bulk Deal (12%)</button>
-          </div>
-        </div>
-
-        <div class="calc-results">
-          <div class="calc-result-card">
-            
-            <div class="calc-result-num green" id="res-cost">UGX 0</div>
-            <div class="calc-result-lbl">Monthly Cost</div>
-          </div>
-          <div class="calc-result-card">
-            
-            <div class="calc-result-num" id="res-savings">UGX 0</div>
-            <div class="calc-result-lbl">You Save</div>
-          </div>
-          <div class="calc-result-card">
-            
-            <div class="calc-result-num" id="res-kg">0 kg</div>
-            <div class="calc-result-lbl">Gas per Month</div>
-          </div>
-          <div class="calc-result-card">
-            
-            <div class="calc-result-num" id="res-deliveries">0</div>
-            <div class="calc-result-lbl">Deliveries</div>
-          </div>
-        </div>
-
-        <div style="margin-top:1.5rem;">
-          <a href="contact.html" class="btn-pulse ripple-btn" style="display:block;text-align:center;border:none;cursor:pointer;font-family:var(--ff-display);font-size:0.8rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:14px;border-radius:10px;background:var(--red);">
-            Order at This Rate <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ─── REGIONS ──────────────────────────────────────────── -->
 <section id="regions">
@@ -1346,15 +1422,67 @@ footer {
     <h2 class="cta-banner-title">Ready to Order<br><em>Gas Today?</em></h2>
     <p class="cta-banner-sub">Join thousands of homes and businesses across Uganda who trust Mukrite Energies for consistent, safe, and affordable gas supply.</p>
     <div class="cta-banner-btns">
-      <a href="contact.html" class="btn-white ripple-btn">Order Now</a>
-      <a href="tel:+256700000000" class="btn-outline-green-light ripple-btn">
-        <i class="fa-solid fa-phone"></i> Call Us: +256 700 000 000
+      <button onclick="openOrderModal()" class="btn-white ripple-btn">Order Now</button>
+      <a href="tel:+256785239229" class="btn-outline-green-light ripple-btn">
+        <i class="fa-solid fa-phone"></i> Call Us: +256 785 239 229
       </a>
     </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<!-- ─── ORDER MODAL ───────────────────────────────────────── -->
+<div class="modal-overlay" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeOrderModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-eyebrow">Quick Order</div>
+    <h2 class="modal-title" id="modalTitle">Place Your<br>Gas Order</h2>
+    <p class="modal-sub">Fill in your details and we'll get your gas delivered fast.</p>
+    <div class="order-form" id="orderForm">
+      <div class="form-field">
+        <label for="o-name">Full Name</label>
+        <input type="text" id="o-name" placeholder="e.g. Sarah Nakato" required>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="o-phone">Phone Number</label>
+          <input type="tel" id="o-phone" placeholder="+256 7XX XXX XXX" required>
+        </div>
+        <div class="form-field">
+          <label for="o-location">Location / Area</label>
+          <input type="text" id="o-location" placeholder="e.g. Ntinda, Kampala" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="o-size">Cylinder Size</label>
+          <select id="o-size" required>
+            <option value="" disabled selected>Select size</option>
+            <option value="6kg">6 kg</option>
+            <option value="12kg">12 kg</option>
+            <option value="50kg">50 kg</option>
+            <option value="bulk">Bulk / Industrial</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="o-qty">Quantity</label>
+          <input type="number" id="o-qty" placeholder="e.g. 2" min="1" required>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-order-email" onclick="submitByEmail()">
+          <i class="fa-solid fa-envelope"></i> Send Order by Email
+        </button>
+        <div class="modal-divider">or</div>
+        <button class="btn-order-wa" onclick="submitByWhatsApp()">
+          <i class="fa-brands fa-whatsapp"></i> Send via WhatsApp
+        </button>
+      </div>
+      <p class="modal-note">Your order goes directly to our team at <strong>energymukrite@gmail.com</strong>.<br>We'll confirm within 1–2 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ───────────────────────────────────────────── -->
 <footer>
   <div class="footer-grid">
     <div>
@@ -1362,10 +1490,10 @@ footer {
       <div class="footer-brand-sub">Gas Supply Specialists · Uganda</div>
       <p class="footer-brand-desc">Uganda's trusted source for LPG cylinder supply, refilling, and bulk gas delivery. Serving homes, businesses, and industry since 2016.</p>
       <div class="footer-socials">
-        <a class="footer-social" href="#"><i class="fa-brands fa-facebook-f"></i></a>
-        <a class="footer-social" href="#"><i class="fa-brands fa-x-twitter"></i></a>
-        <a class="footer-social" href="#"><i class="fa-brands fa-whatsapp"></i></a>
-        <a class="footer-social" href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a class="footer-social" href="tiktok.com/@mukriteenergies"><i class="fa-brands fa-tiktok"></i></a>
+        <a class="footer-social" href="https://x.com/MukriteEnergy"><i class="fa-brands fa-x-twitter"></i></a>
+        <a class="footer-social" href="energymukrite@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        <a class="footer-social" href="#"><i class="fa-solid fa-globe"></i></a>
       </div>
     </div>
     <div>
@@ -1390,41 +1518,20 @@ footer {
     <div>
       <div class="footer-col-title">Contact</div>
       <div class="footer-links">
-        <a href="tel:+256700000000"><i class="fa-solid fa-phone" style="font-size:0.7rem;color:var(--green-light)"></i> +256 700 000 000</a>
-        <a href="mailto:info@mukriteenergies.com"><i class="fa-solid fa-envelope" style="font-size:0.7rem;color:var(--green-light)"></i> info@mukriteenergies.com</a>
-        <a href="#"><i class="fa-solid fa-location-dot" style="font-size:0.7rem;color:var(--green-light)"></i> Plot 14, Nakawa Industrial, Kampala</a>
-        <a href="#"><i class="fa-brands fa-whatsapp" style="font-size:0.7rem;color:var(--green-light)"></i> WhatsApp Order Line</a>
+        <a href="tel:+256785239229"><i class="fa-solid fa-phone" style="font-size:0.7rem;color:var(--green-light)"></i> +256 785 239 229</a>
+        <a href="mailto:energymukrite@gmail.com"><i class="fa-solid fa-envelope" style="font-size:0.7rem;color:var(--green-light)"></i> energymukrite@gmail.com</a>
+        <a href="#"><i class="fa-solid fa-location-dot" style="font-size:0.7rem;color:var(--green-light)"></i> Makindye Boston, Kampala</a>
+        <a href="#"><i class="fa-brands fa-whatsapp" style="font-size:0.7rem;color:var(--green-light)"></i> +256 785239229</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2024 Mukrite Energies Ltd. All rights reserved.</div>
+    <div class="footer-copy">© <span id="footer-year"></span> Mukrite Energies Ltd. All rights reserved.</div>
     <div class="footer-made">Built for <span>Uganda 🇺🇬</span></div>
   </div>
 </footer>
 
-<!-- CALCULATOR BUTTON STYLES -->
-<style>
-.size-btn, .type-btn {
-  padding: 8px 16px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.65);
-  font-family: var(--ff-display); font-size: 0.78rem;
-  font-weight: 600; letter-spacing: 0.06em;
-  border-radius: 6px; cursor: pointer;
-  transition: all 0.25s;
-}
-.size-btn:hover, .type-btn:hover {
-  background: rgba(255,255,255,0.14);
-  color: #fff; border-color: rgba(255,255,255,0.3);
-}
-.size-btn.active, .type-btn.active {
-  background: var(--green-light);
-  border-color: var(--green-light);
-  color: #fff;
-}
-</style>
+
 
 <script>
 /* ── NAV SCROLL ──────────────────────────────────────── */
@@ -1471,69 +1578,122 @@ const revealObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
 
-/* ── CALCULATOR ──────────────────────────────────────── */
-// Prices in UGX
-const PRICES = { 6: 35000, 12: 68000, 50: 260000 };
-let currentSize = 6;
-let currentDiscount = 0;
 
-function setSize(btn, size) {
-  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentSize = size;
-  updateCalc();
+
+/* ── PHOTO MARQUEE STRIP ─────────────────────────── */
+(function() {
+  const photos = [
+    { src: '1.jpeg',  caption: 'Gas delivery — Kampala' },
+    { src: '2.jpeg',   caption: 'Safe cylinder placement' },
+    { src: '3.jpeg',  caption: 'Wholesale depot, Nakawa' },
+    { src: '4.jpeg',   caption: 'Industrial bulk supply' },
+    { src: '5.jpeg',  caption: 'Residential home service' },
+    { src: '6.jpeg',   caption: 'Cylinder safety check' },
+    { src: '7.jpeg',   caption: 'Cylinder safety check' },
+    { src: '8.jpeg',   caption: 'Cylinder safety check' },
+    { src: '9.jpeg',   caption: 'Cylinder safety check' },
+    { src: '10.jpeg',   caption: 'Cylinder safety check' },
+    { src: '11.jpeg',   caption: 'Cylinder safety check' },
+    { src: '12.jpeg',   caption: 'Cylinder safety check' },
+    { src: '13.jpeg',   caption: 'Cylinder safety check' },
+    { src: '14.jpeg',   caption: 'Cylinder safety check' },
+    { src: '15.jpeg',   caption: 'Cylinder safety check' },
+    { src: '16.jpeg',   caption: 'Cylinder safety check' },
+    { src: '17.jpeg',   caption: 'Cylinder safety check' },
+    { src: '18.jpeg',   caption: 'Cylinder safety check' },
+  ];
+  const phClasses = ['ph-1','ph-2','ph-3','ph-4','ph-5','ph-6'];
+  const track = document.getElementById('albumTrack');
+  if (!track) return;
+
+  function makeCard(p, i) {
+    const card = document.createElement('div');
+    card.className = `album-card ${phClasses[i % phClasses.length]}`;
+    card.innerHTML = `
+      <img class="album-card-img" src="${p.src}" alt="${p.caption}" onerror="this.style.display='none'">
+      <div class="album-card-caption">${p.caption}</div>`;
+    return card;
+  }
+
+  // Render set twice for seamless loop
+  [...photos, ...photos].forEach((p, i) => {
+    track.appendChild(makeCard(p, i % photos.length));
+  });
+})();
+
+/* ── ORDER MODAL ─────────────────────────────────────── */
+function openOrderModal() {
+  document.getElementById('orderModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
-function setType(btn, discount) {
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentDiscount = discount;
-  updateCalc();
+function closeOrderModal() {
+  document.getElementById('orderModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close on overlay click
+document.getElementById('orderModal').addEventListener('click', function(e) {
+  if (e.target === this) closeOrderModal();
+});
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeOrderModal();
+});
+
+function getOrderDetails() {
+  const name     = document.getElementById('o-name').value.trim();
+  const phone    = document.getElementById('o-phone').value.trim();
+  const location = document.getElementById('o-location').value.trim();
+  const size     = document.getElementById('o-size').value;
+  const qty      = document.getElementById('o-qty').value.trim();
+  if (!name || !phone || !location || !size || !qty) {
+    alert('Please fill in all fields before submitting.');
+    return null;
+  }
+  return { name, phone, location, size, qty };
 }
 
-function animateNum(el, newVal, prefix = '', suffix = '') {
-  const current = parseFloat(el.dataset.val || 0);
-  const diff = newVal - current;
-  const steps = 25;
-  let step = 0;
-  const timer = setInterval(() => {
-    step++;
-    const val = current + diff * (step / steps);
-    if (prefix === 'UGX ') {
-      el.textContent = prefix + Math.round(val).toLocaleString();
-    } else {
-      el.textContent = Math.round(val) + suffix;
-    }
-    if (step >= steps) {
-      clearInterval(timer);
-      el.dataset.val = newVal;
-    }
-  }, 14);
+function submitByEmail() {
+  const d = getOrderDetails();
+  if (!d) return;
+  const subject = encodeURIComponent(`New Gas Order — ${d.name}`);
+  const body = encodeURIComponent(
+`Hello Mukrite Energies,
+
+I would like to place an order for gas cylinders. Here are my details:
+
+Name:         ${d.name}
+Phone:        ${d.phone}
+Location:     ${d.location}
+Cylinder Size: ${d.size}
+Quantity:     ${d.qty}
+
+Please confirm my order at your earliest convenience.
+
+Thank you.`
+  );
+  window.location.href = `mailto:energymukrite@gmail.com?subject=${subject}&body=${body}`;
 }
 
-function updateCalc() {
-  const slider = document.getElementById('cylSlider');
-  const count = parseInt(slider.value);
-  document.getElementById('cylCount').textContent = count;
+function submitByWhatsApp() {
+  const d = getOrderDetails();
+  if (!d) return;
+  const msg = encodeURIComponent(
+`Hello Mukrite Energies! 
 
-  // Update slider fill
-  const pct = ((count - 1) / 49) * 100;
-  slider.style.backgroundSize = pct + '% 100%';
+I'd like to place a gas order:
 
-  const basePrice = PRICES[currentSize];
-  const totalBase = basePrice * count;
-  const discount = Math.round(totalBase * currentDiscount);
-  const finalCost = totalBase - discount;
-  const totalKg = currentSize * count;
-  const deliveries = count <= 5 ? 1 : Math.ceil(count / 5);
+ *Name:* ${d.name}
+ *Phone:* ${d.phone}
+ *Location:* ${d.location}
+ *Cylinder Size:* ${d.size}
+ *Quantity:* ${d.qty}
 
-  animateNum(document.getElementById('res-cost'), finalCost, 'UGX ', '');
-  animateNum(document.getElementById('res-savings'), discount, 'UGX ', '');
-  document.getElementById('res-kg').textContent = totalKg + ' kg';
-  document.getElementById('res-deliveries').textContent = deliveries;
+Please confirm my order. Thank you!`
+  );
+  window.open(`https://wa.me/256785239229?text=${msg}`, '_blank');
 }
-updateCalc(); // init
 
-/* ── CARD 3D TILT ────────────────────────────────────── */
+
 document.querySelectorAll('.service-card').forEach(card => {
   card.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
@@ -1549,6 +1709,7 @@ document.querySelectorAll('.service-card').forEach(card => {
     card.style.transform = '';
   });
 });
+document.getElementById('footer-year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
