@@ -526,109 +526,7 @@ section { padding: 7rem 5%; }
 }
 .service-card:hover .service-card-num { color: rgba(10,92,54,0.08); }
 
-/* ─── CALCULATOR ────────────────────────────────────────── */
-#calculator { background: var(--green); position: relative; overflow: hidden; }
-.calc-bg-pattern {
-  position: absolute; inset: 0;
-  background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(18,163,98,0.15) 0%, transparent 50%);
-}
-.calc-grid-lines {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-.calc-layout {
-  position: relative; z-index: 2;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-}
-.calc-left .section-eyebrow { color: var(--green-light); }
-.calc-left .section-eyebrow::before { background: var(--green-light); }
-.calc-left .section-title { color: #fff; }
-.calc-left .section-title em { color: #FFD580; }
-.calc-left .section-desc { color: rgba(255,255,255,0.65); max-width: 400px; }
-.calc-features { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
-.calc-feature {
-  display: flex; align-items: center; gap: 12px;
-  font-size: 0.9rem; color: rgba(255,255,255,0.8);
-}
-.calc-feature i { color: var(--green-light); font-size: 0.9rem; }
 
-.calc-panel {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 20px;
-  padding: 2.8rem;
-  backdrop-filter: blur(10px);
-}
-.calc-panel-title {
-  font-family: var(--ff-display);
-  font-size: 1.1rem; font-weight: 700;
-  color: #fff; letter-spacing: 0.05em;
-  margin-bottom: 2rem;
-  display: flex; align-items: center; gap: 10px;
-}
-.calc-panel-title i { color: var(--green-light); }
-
-.calc-group { margin-bottom: 2rem; }
-.calc-label {
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.82rem; color: rgba(255,255,255,0.65);
-  margin-bottom: 0.7rem; font-family: var(--ff-display);
-  font-weight: 500; letter-spacing: 0.05em;
-}
-.calc-label-value {
-  font-family: var(--ff-display);
-  font-size: 1rem; font-weight: 700; color: #FFD580;
-}
-.calc-slider {
-  -webkit-appearance: none; appearance: none;
-  width: 100%; height: 5px;
-  background: rgba(255,255,255,0.15); border-radius: 5px; outline: none;
-  cursor: pointer;
-  background-image: linear-gradient(var(--green-light), var(--green-light));
-  background-repeat: no-repeat;
-}
-.calc-slider::-webkit-slider-thumb {
-  -webkit-appearance: none; appearance: none;
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  background: #fff;
-  border: 3px solid var(--green-light);
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  transition: transform 0.2s;
-}
-.calc-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
-
-.calc-results {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.12);
-  padding-top: 2rem;
-}
-.calc-result-card {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px; padding: 1.2rem;
-  text-align: center;
-  transition: background 0.3s;
-}
-.calc-result-card:hover { background: rgba(255,255,255,0.12); }
-.calc-result-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
-.calc-result-num {
-  font-family: var(--ff-display);
-  font-size: 1.5rem; font-weight: 800;
-  color: #fff; line-height: 1;
-  margin-bottom: 0.3rem;
-  transition: all 0.3s;
-}
-.calc-result-num.green { color: var(--green-light); }
-.calc-result-lbl {
-  font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-}
 
 /* ─── REGIONS ───────────────────────────────────────────── */
 #regions { background: var(--off-white); }
@@ -1134,10 +1032,7 @@ footer {
       </div>
     </div>
   </div>
-  <div class="hero-scroll">
-    <div class="scroll-mouse"></div>
-    <span>Scroll</span>
-  </div>
+  
 </section>
 
 <!-- ─── TICKER ──────────────────────────────────────────── -->
@@ -1490,7 +1385,7 @@ footer {
       <div class="footer-brand-sub">Gas Supply Specialists · Uganda</div>
       <p class="footer-brand-desc">Uganda's trusted source for LPG cylinder supply, refilling, and bulk gas delivery. Serving homes, businesses, and industry since 2016.</p>
       <div class="footer-socials">
-        <a class="footer-social" href="tiktok.com/@mukriteenergies"><i class="fa-brands fa-tiktok"></i></a>
+        <a class="footer-social" href="https://tiktok.com/@mukriteenergies"><i class="fa-brands fa-tiktok"></i></a>
         <a class="footer-social" href="https://x.com/MukriteEnergy"><i class="fa-brands fa-x-twitter"></i></a>
         <a class="footer-social" href="energymukrite@gmail.com"><i class="fa-solid fa-envelope"></i></a>
         <a class="footer-social" href="#"><i class="fa-solid fa-globe"></i></a>
