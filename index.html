@@ -1101,16 +1101,34 @@ footer {
   .regions-grid { grid-template-columns: 1fr 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
+/* ─── CYLINDER SAFETY LAYOUT ────────────────────────────── */
+.safety-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 5rem 5rem;
+  align-items: center;
+}
+.safety-text    { grid-column: 1; grid-row: 1; }
+.safety-img-wrap{ grid-column: 2; grid-row: 1; }
+.safety-features {
+  grid-column: 1 / -1; /* full width */
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 0;
+}
+
 @media (max-width: 900px) {
   .calc-layout { grid-template-columns: 1fr; gap: 3rem; }
   .why-layout { grid-template-columns: 1fr; gap: 3rem; }
   .regions-header { grid-template-columns: 1fr; gap: 1.5rem; }
   .why-badge { left: 0; }
-  /* CYLINDER SAFETY — keep big-screen two-column layout at all sizes */
-  .safety-layout {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 3rem !important;
-  }
+
+  /* CYLINDER SAFETY — tighten gap on mid screens */
+  .safety-layout { gap: 3rem; }
+  .safety-features { grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
 }
 @media (max-width: 768px) {
   .nav-links, .nav-cta { display: none; }
@@ -1133,10 +1151,26 @@ footer {
   }
   .hero-actions { flex-direction: column; gap: 0.75rem; }
 
-  /* CYLINDER SAFETY — keep two-column layout */
+  /* CYLINDER SAFETY — stack vertically on mobile: text → image → features */
   .safety-layout {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 2rem !important;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 2rem;
+  }
+  .safety-text     { grid-column: 1; grid-row: 1; order: 1; }
+  .safety-img-wrap { grid-column: 1; grid-row: 2; order: 2; }
+  .safety-features {
+    grid-column: 1;
+    grid-row: 3;
+    order: 3;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+  /* Badge stays inside image wrap, no overflow */
+  .safety-img-wrap .why-badge {
+    left: 1rem !important;
+    right: auto !important;
+    bottom: 1rem !important;
   }
 }
 @media (max-width: 480px) {
@@ -1146,7 +1180,7 @@ footer {
   /* Hero — fit title within ~375px viewport */
   .hero-content { padding: 96px 6% 40px; }
   .hero-title   {
-    font-size: clamp(1.85rem, 9vw, 2.4rem); /* 9vw on 375px = ~34px — fits "Powering Every" */
+    font-size: clamp(1.85rem, 9vw, 2.4rem);
     line-height: 1.05;
     letter-spacing: -0.005em;
   }
@@ -1158,17 +1192,6 @@ footer {
     font-size: 0.78rem;
     width: 100%;
     justify-content: center;
-  }
-
-  /* CYLINDER SAFETY — keep two-column layout even on small phones */
-  .safety-layout {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 1.2rem !important;
-  }
-  /* Tuck the badge so it doesn't overflow on narrow screens */
-  #cylinder-safety .why-badge {
-    right: 0 !important;
-    left: auto !important;
   }
 }
 </style>
@@ -1508,44 +1531,46 @@ footer {
 
 <!-- ─── CYLINDER SAFETY ──────────────────────────────────── -->
 <section id="cylinder-safety" style="background:var(--off-white);">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" class="why-layout safety-layout">
-    <div class="reveal-left">
+  <div class="safety-layout">
+    <!-- Left: heading + description -->
+    <div class="safety-text reveal-left">
       <div class="section-eyebrow">Safe Usage Guide</div>
       <h2 class="section-title">How to Place<br><em>Your Cylinder</em></h2>
-      <p class="section-desc" style="margin-bottom:2rem;">Your safety is our priority. Every Mukrite Energies cylinder comes with clear usage guidance. Follow these simple rules to use your gas safely at home or at work.</p>
-      <div class="why-features">
-        <div class="why-feature">
-          <div class="why-feature-icon"><i class="fa-solid fa-arrow-up"></i></div>
-          <div>
-            <div class="why-feature-title">Vertical, Valve Upwards</div>
-            <div class="why-feature-desc">Always store and use the cylinder upright with the valve facing upwards. Never lay it on its side.</div>
-          </div>
-        </div>
-        <div class="why-feature">
-          <div class="why-feature-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
-          <div>
-            <div class="why-feature-title">Away from Heat Sources</div>
-            <div class="why-feature-desc">Keep the cylinder away from any source of heat, open flame, or direct sunlight at all times.</div>
-          </div>
-        </div>
-        <div class="why-feature">
-          <div class="why-feature-icon"><i class="fa-solid fa-wind"></i></div>
-          <div>
-            <div class="why-feature-title">Well-Ventilated Area</div>
-            <div class="why-feature-desc">Place the cylinder on or above ground level with adequate ventilation and in an easily accessible position.</div>
-          </div>
-        </div>
-      </div>
+      <p class="section-desc">Your safety is our priority. Every Mukrite Energies cylinder comes with clear usage guidance. Follow these simple rules to use your gas safely at home or at work.</p>
     </div>
-    <div class="why-img-wrap reveal-right">
+    <!-- Right: image + badge -->
+    <div class="why-img-wrap safety-img-wrap reveal-right">
       <img class="why-img-main" style="aspect-ratio:1/1;object-fit:contain;background:#fff;border-radius:16px;padding:1rem;"
         src="how to.jpeg"
         alt="How to place a Mukrite Energies LPG cylinder safely">
       <div class="why-badge" style="left:auto;right:-1.5rem;bottom:2rem;">
-        
         <div>
           <div class="why-badge-num">UNBS</div>
           <div class="why-badge-text">Safety Certified</div>
+        </div>
+      </div>
+    </div>
+    <!-- Full-width row: three safety rules -->
+    <div class="safety-features reveal">
+      <div class="why-feature">
+        <div class="why-feature-icon"><i class="fa-solid fa-arrow-up"></i></div>
+        <div>
+          <div class="why-feature-title">Vertical, Valve Upwards</div>
+          <div class="why-feature-desc">Always store and use the cylinder upright with the valve facing upwards. Never lay it on its side.</div>
+        </div>
+      </div>
+      <div class="why-feature">
+        <div class="why-feature-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+        <div>
+          <div class="why-feature-title">Away from Heat Sources</div>
+          <div class="why-feature-desc">Keep the cylinder away from any source of heat, open flame, or direct sunlight at all times.</div>
+        </div>
+      </div>
+      <div class="why-feature">
+        <div class="why-feature-icon"><i class="fa-solid fa-wind"></i></div>
+        <div>
+          <div class="why-feature-title">Well-Ventilated Area</div>
+          <div class="why-feature-desc">Place the cylinder on or above ground level with adequate ventilation and in an easily accessible position.</div>
         </div>
       </div>
     </div>
