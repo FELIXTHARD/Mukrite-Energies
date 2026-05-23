@@ -55,49 +55,51 @@ button, a, [onclick] { touch-action: manipulation; } /* kills 300ms delay + doub
 /* ─── NAV ────────────────────────────────────────────────── */
 #navbar {
   position: fixed; top: 0; width: 100%; z-index: 1000;
-  padding: 20px 5%;
+  padding: 18px 5%;
   display: flex; align-items: center; justify-content: space-between;
   transition: all 0.45s cubic-bezier(0.4,0,0.2,1);
 }
 #navbar.scrolled {
-  background: rgba(255,255,255,0.82);
+  background: rgba(255,255,255,0.88);
   backdrop-filter: blur(24px) saturate(1.6);
   -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  padding: 12px 5%;
+  padding: 10px 5%;
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
 }
 .nav-brand {
   display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
 }
+/* ── Logo mark ── */
 .nav-logo-mark {
- 
-  
-  border-radius: 8px;
+  width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
-  transition: transform 0.3s;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  flex-shrink: 0;
 }
-.nav-logo-mark:hover { transform: rotate(-8deg) scale(1.05); }
-.nav-logo-mark svg { color: #fff; }
+.nav-logo-mark:hover { transform: scale(1.1) rotate(-6deg); }
+.nav-logo-svg { width: 38px; height: 38px; display: block; }
 .nav-brand-name {
   font-family: var(--ff-display);
-  font-size: 1.2rem; font-weight: 700;
+  font-size: 1.15rem; font-weight: 700;
   color: var(--white);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   transition: color 0.4s;
   line-height: 1.1;
 }
 .nav-brand-name span {
   display: block;
-  font-size: 0.55rem; font-weight: 500;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  opacity: 0.75;
+  font-size: 0.52rem; font-weight: 500;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  opacity: 0.7;
 }
 #navbar.scrolled .nav-brand-name { color: var(--green); }
+
 .nav-links { display: flex; gap: 0; list-style: none; }
 .nav-link-item a {
   font-family: var(--ff-display);
-  font-size: 0.8rem; font-weight: 500;
+  font-size: 0.78rem; font-weight: 500;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: rgba(255,255,255,0.75);
   padding: 8px 16px;
@@ -119,11 +121,11 @@ button, a, [onclick] { touch-action: manipulation; } /* kills 300ms delay + doub
 .nav-link-item a:hover { color: var(--white); }
 #navbar.scrolled .nav-link-item a:hover { color: var(--green); }
 .nav-cta {
-  padding: 10px 24px;
+  padding: 10px 22px;
   background: var(--red);
   color: #fff !important;
   font-family: var(--ff-display);
-  font-size: 0.78rem; font-weight: 600;
+  font-size: 0.76rem; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
   border-radius: 6px;
   transition: background 0.3s, transform 0.2s, box-shadow 0.3s !important;
@@ -134,49 +136,200 @@ button, a, [onclick] { touch-action: manipulation; } /* kills 300ms delay + doub
   transform: translateY(-1px) !important;
   box-shadow: 0 8px 24px var(--red-glow) !important;
 }
-.hamburger {
-  display: none; flex-direction: column; gap: 5px;
-  cursor: pointer; padding: 4px;
-}
-.hamburger span {
-  width: 24px; height: 2px;
-  background: var(--white);
-  border-radius: 2px;
-  transition: 0.3s;
-  display: block;
-}
-#navbar.scrolled .hamburger span { background: var(--slate); }
-.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* Mobile Menu */
-.mobile-menu {
+/* ── Hamburger Button ── */
+.hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  gap: 0;
+  transition: background 0.3s, border-color 0.3s;
+  position: relative;
+  flex-shrink: 0;
+}
+#navbar.scrolled .hamburger {
+  background: rgba(10,92,54,0.07);
+  border-color: var(--border-dark);
+}
+.hamburger:hover {
+  background: rgba(255,255,255,0.18);
+}
+#navbar.scrolled .hamburger:hover {
+  background: rgba(10,92,54,0.13);
+}
+.ham-bar {
+  display: block;
+  width: 18px; height: 1.5px;
+  background: #fff;
+  border-radius: 2px;
+  position: absolute;
+  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1),
+              opacity  0.25s ease,
+              width    0.3s ease;
+}
+#navbar.scrolled .ham-bar { background: var(--slate); }
+.ham-bar:nth-child(1) { transform: translateY(-5.5px); }
+.ham-bar:nth-child(2) { transform: translateY(0); }
+.ham-bar:nth-child(3) { transform: translateY(5.5px); width: 12px; }
+
+/* Open state — morphs into × */
+.hamburger.is-open .ham-bar:nth-child(1) { transform: translateY(0) rotate(45deg); }
+.hamburger.is-open .ham-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.is-open .ham-bar:nth-child(3) { transform: translateY(0) rotate(-45deg); width: 18px; }
+
+/* ── Drawer backdrop ── */
+.drawer-backdrop {
+  position: fixed; inset: 0; z-index: 1099;
+  background: rgba(3,18,10,0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.drawer-backdrop.is-open { opacity: 1; pointer-events: all; }
+
+/* ── Mobile Drawer ── */
+.mobile-drawer {
   position: fixed; top: 0; right: 0;
-  width: 100%; height: 100vh;
-  background: var(--green);
-  z-index: 999;
+  width: min(88vw, 320px); height: 100dvh;
+  background: #fff;
+  z-index: 1100;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 2rem;
   transform: translateX(100%);
-  transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  transition: transform 0.42s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: -8px 0 40px rgba(0,0,0,0.18);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.mobile-menu.open { transform: translateX(0); }
-.mobile-menu a {
+.mobile-drawer.is-open { transform: translateX(0); }
+
+/* Drawer header */
+.drawer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--green);
+  flex-shrink: 0;
+}
+.drawer-brand {
+  display: flex; align-items: center; gap: 9px;
+}
+.drawer-logo { width: 30px; height: 30px; display: block; flex-shrink: 0; }
+.drawer-brand-name {
   font-family: var(--ff-display);
-  font-size: 2rem; font-weight: 700;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 0.06em;
-  transition: color 0.3s;
+  font-size: 1rem; font-weight: 700;
+  color: #fff; letter-spacing: 0.03em; line-height: 1.1;
 }
-.mobile-menu a:hover { color: #fff; }
-.mobile-menu-close {
-  position: absolute; top: 1.5rem; right: 5%;
-  background: none; border: none; cursor: pointer;
-  color: rgba(255,255,255,0.7); font-size: 1.8rem;
-  transition: color 0.3s;
+.drawer-brand-name small {
+  display: block; font-size: 0.45rem; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.65;
 }
-.mobile-menu-close:hover { color: #fff; }
+.drawer-close {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff; font-size: 0.9rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+  flex-shrink: 0;
+}
+.drawer-close:hover { background: rgba(255,255,255,0.22); transform: rotate(90deg); }
+
+/* Drawer nav links */
+.drawer-nav {
+  flex: 1; padding: 10px 0;
+  display: flex; flex-direction: column;
+}
+.drawer-link {
+  display: flex; align-items: center;
+  padding: 14px 22px;
+  gap: 14px;
+  border-bottom: 1px solid rgba(10,92,54,0.07);
+  transition: background 0.22s, padding-left 0.22s;
+  position: relative;
+}
+.drawer-link:hover, .drawer-link.active {
+  background: var(--green-subtle);
+  padding-left: 28px;
+}
+.drawer-link-num {
+  font-family: var(--ff-display);
+  font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--green-light);
+  width: 20px; flex-shrink: 0;
+}
+.drawer-link-text {
+  font-family: var(--ff-display);
+  font-size: 1rem; font-weight: 700;
+  color: var(--slate); letter-spacing: 0.02em;
+  flex: 1;
+  transition: color 0.22s;
+}
+.drawer-link:hover .drawer-link-text,
+.drawer-link.active .drawer-link-text { color: var(--green); }
+.drawer-link-arrow {
+  font-size: 0.65rem; color: var(--green-light);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.22s, transform 0.22s;
+}
+.drawer-link:hover .drawer-link-arrow,
+.drawer-link.active .drawer-link-arrow { opacity: 1; transform: translateX(0); }
+
+/* Active indicator bar */
+.drawer-link.active::before {
+  content: '';
+  position: absolute; left: 0; top: 20%; bottom: 20%;
+  width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--green);
+}
+
+/* Drawer CTA */
+.drawer-cta {
+  padding: 18px 22px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.drawer-order-btn {
+  width: 100%; padding: 13px;
+  background: var(--red); color: #fff;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: var(--ff-display); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.25s, transform 0.2s;
+  box-shadow: 0 4px 14px var(--red-glow);
+}
+.drawer-order-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+/* Drawer footer contact */
+.drawer-footer {
+  padding: 16px 22px 28px;
+  border-top: 1px solid var(--border);
+  background: var(--off-white);
+  flex-shrink: 0;
+}
+.drawer-contact-label {
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--slate-light); font-weight: 600; margin-bottom: 10px;
+}
+.drawer-contact-links { display: flex; flex-direction: column; gap: 8px; }
+.drawer-contact-link {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 0.82rem; color: var(--slate);
+  transition: color 0.2s;
+}
+.drawer-contact-link i {
+  width: 16px; text-align: center;
+  color: var(--green); font-size: 0.75rem;
+}
+.drawer-contact-link:hover { color: var(--green); }
 
 /* ─── HERO ─────────────────────────────────────────────── */
 #hero {
@@ -259,6 +412,7 @@ button, a, [onclick] { touch-action: manipulation; } /* kills 300ms delay + doub
   letter-spacing: 0.12em; text-transform: uppercase;
   border-radius: 8px; border: none; cursor: pointer;
   position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center; text-align: center;
   box-shadow: 0 0 0 0 var(--red-glow);
   animation: ctaPulse 2.2s ease-in-out 1.5s infinite;
   transition: transform 0.2s, box-shadow 0.3s;
@@ -1003,26 +1157,84 @@ footer {
 </head>
 <body>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-menu-close" id="mobileClose"><i class="fa-solid fa-xmark"></i></button>
-  <a href="index.html" onclick="closeMobile()">Home</a>
-  <a href="services.html" onclick="closeMobile()">Services</a>
-  <a href="about.html" onclick="closeMobile()">About</a>
-  <a href="contact.html" onclick="closeMobile()">Contact</a>
-</div>
+<!-- ── Drawer backdrop ── -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+<!-- ── Mobile Drawer ── -->
+<aside class="mobile-drawer" id="mobileMenu" aria-label="Site navigation">
+  <div class="drawer-header">
+    <div class="drawer-brand">
+      <svg class="drawer-logo" viewBox="318 288 244 314" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#57CB31" d="M427.115662,389.119812 C430.679413,385.697784 433.959351,382.498291 437.239319,379.298798 C436.871460,378.516052 436.503632,377.733337 436.135803,376.950592 C433.130798,377.442932 429.672607,377.151581 427.207275,378.577179 C420.303650,382.569305 413.805115,387.263123 407.160095,391.700104 C406.079773,392.421448 405.133545,393.359406 404.013916,394.003632 C390.229309,401.935211 383.944519,414.122681 383.032990,429.728851 C382.262390,442.922089 384.635437,455.693207 387.081482,468.508179 C389.149261,479.341522 391.118042,490.194183 393.038818,501.054565 C393.258820,502.298370 392.887848,503.646698 392.790894,504.946594 C392.357635,505.197540 391.924377,505.448517 391.491119,505.699493 C389.456543,502.672058 386.550934,499.904877 385.553680,496.567474 C382.766724,487.240753 376.765717,479.909882 371.539459,472.104950 C365.624786,463.271790 361.372345,453.700592 357.998657,443.700104 C355.876312,437.409058 353.990875,431.038086 351.787506,424.029694 C350.277527,425.122101 348.176178,426.244598 346.585144,427.867432 C341.682434,432.868317 336.984222,438.069305 332.187256,443.174438 C329.645966,445.879028 330.052185,448.587555 332.152588,451.267487 C336.783447,457.175995 341.380585,463.112976 346.117554,468.935822 C352.701569,477.029236 359.396912,485.032257 366.062042,493.059448 C366.455048,493.532776 367.010925,493.868652 367.478027,494.283112 C371.216187,497.599579 375.117279,500.753815 378.640564,504.284943 C382.185089,507.837280 385.004364,512.166138 388.765106,515.437805 C394.826538,520.711121 395.044647,526.826050 392.948578,533.627014 C384.650116,537.156494 383.919281,528.279175 379.640106,525.447876 C376.661499,523.477112 375.172180,519.257202 373.012665,516.045227 C372.649475,515.505005 372.381287,514.738342 371.867798,514.485596 C359.153564,508.229584 352.827515,495.460327 343.109039,486.148376 C336.126678,479.458160 330.355591,471.522858 323.702881,464.464630 C315.239899,455.485718 315.926575,439.195221 324.242462,430.687561 C333.826965,420.882019 344.311920,411.961029 353.999695,402.250732 C360.733978,395.500793 366.824860,388.104065 373.128174,380.930359 C381.623871,371.261597 389.886993,361.383087 398.556244,351.873840 C404.717010,345.116180 411.435211,338.869232 417.774200,332.269073 C418.846832,331.152222 419.944244,329.360229 419.861359,327.948792 C419.408325,320.233246 418.631714,312.535034 417.871399,304.840210 C417.655518,302.655426 417.121552,300.502045 416.733429,298.334259 C417.279205,297.985657 417.824982,297.637085 418.370758,297.288483 C420.611786,299.372162 423.093231,301.252472 425.055206,303.572144 C438.880402,319.917908 450.969208,337.490875 461.673035,356.022003 C462.240417,357.004242 462.953003,358.060730 463.050354,359.132416 C464.399475,373.985626 461.166534,387.135437 451.806305,399.478485 C443.457184,410.488220 432.299469,417.333649 421.896271,425.579254 C416.437256,429.906067 413.154602,437.002960 408.985596,442.916901 C407.867035,444.503632 407.370544,446.586823 406.087067,447.980255 C405.127594,449.021973 403.276489,449.921478 401.986908,449.736694 C401.154602,449.617401 400.071289,447.440369 400.033569,446.158081 C399.479004,427.315277 406.421295,411.181396 418.400818,397.037781 C420.839874,394.158142 424.002716,391.891571 426.831879,389.342377 z"/>
+        <path fill="#FC0A0A" d="M477.061035,493.306458 C483.511627,491.888367 484.466858,490.548767 484.884735,484.239838 C485.212555,479.290558 486.232819,474.390961 486.713654,469.446747 C487.112396,465.346710 487.278198,461.215668 487.352722,457.094879 C487.421753,453.279877 487.462921,449.436676 487.075073,445.651093 C486.824097,443.201324 485.869415,440.801819 485.053436,438.440857 C484.632202,437.222168 483.440704,436.195374 483.255737,434.981506 C482.078339,427.254242 480.992889,419.509460 480.106171,411.744263 C479.925354,410.160675 480.718872,408.465790 481.063263,406.822205 C481.521729,406.706207 481.980194,406.590210 482.438660,406.474243 C485.691162,411.112915 489.060150,415.674957 492.171875,420.406250 C498.624725,430.217560 505.623352,439.762207 511.038788,450.126495 C513.950378,455.698822 514.060059,462.738647 515.405579,469.122345 C515.637939,470.224762 515.320618,471.738220 515.951416,472.411987 C519.252075,475.937317 522.776428,479.253235 527.088928,483.493256 C524.065613,485.682709 521.283569,487.697418 518.501526,489.712128 C514.825989,493.765015 512.850769,499.557465 506.444092,501.755890 C504.947021,502.269592 504.055145,504.399719 502.748840,505.643280 C498.099396,510.069397 493.342285,514.383179 488.729431,518.846436 C486.858917,520.656311 485.388153,522.881958 483.501801,524.672241 C479.183594,528.770508 474.503021,532.505493 470.367340,536.773438 C463.618347,543.738281 456.819733,550.716797 450.769745,558.272217 C447.555725,562.285950 446.129791,567.562561 441.314545,570.642700 C440.113251,571.411133 440.434906,574.956665 440.502136,577.212524 C440.587860,580.086853 439.177429,582.011902 436.791687,580.575195 C433.168854,578.393616 428.751495,576.864319 427.654572,571.512756 C427.092346,568.769714 425.049530,565.664001 422.743713,564.074158 C416.735016,559.931030 414.386169,553.934631 411.715698,547.577087 C407.711365,538.044250 407.976562,528.501648 411.184357,519.400696 C413.691772,512.286743 416.734650,505.226532 424.759521,501.039154 C434.513275,495.949554 443.231873,488.891632 449.980835,479.787048 C451.201019,478.140991 453.589935,477.361267 455.439270,476.181549 C455.884277,476.644348 456.329315,477.107178 456.774323,477.569977 C455.812103,479.712463 454.787354,481.829346 453.898651,484.001923 C450.349640,492.678070 444.285400,499.321930 437.156738,505.188538 C433.455872,508.234222 429.855225,511.434326 426.475739,514.829834 C421.900543,519.426697 422.105072,523.623047 426.992920,528.086304 C431.998993,532.657593 433.128082,535.827332 441.515625,530.370789 C443.871094,528.838501 447.526642,529.387878 450.037384,527.994324 C455.953766,524.710388 462.619690,522.215942 465.578461,515.105591 C466.073578,513.915771 468.638214,513.657837 470.151611,512.801392 C471.718658,511.914581 473.862732,511.156769 474.536499,509.756531 C476.244324,506.207184 477.463043,502.379669 478.455780,498.554047 C478.770050,497.342834 477.751312,495.785706 477.107727,494.177429 C476.872864,493.967957 476.996002,493.526276 477.061035,493.306458 z"/>
+      </svg>
+      <div class="drawer-brand-name">
+        Mukrite Energies
+        <small>A Smart Future</small>
+      </div>
+    </div>
+    <button class="drawer-close" id="mobileClose" aria-label="Close menu">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <nav class="drawer-nav">
+    <a href="index.html" class="drawer-link active" onclick="closeMobile()">
+      <span class="drawer-link-num">01</span>
+      <span class="drawer-link-text">Home</span>
+      <i class="fa-solid fa-arrow-right drawer-link-arrow"></i>
+    </a>
+    <a href="services.html" class="drawer-link" onclick="closeMobile()">
+      <span class="drawer-link-num">02</span>
+      <span class="drawer-link-text">Services</span>
+      <i class="fa-solid fa-arrow-right drawer-link-arrow"></i>
+    </a>
+    <a href="about.html" class="drawer-link" onclick="closeMobile()">
+      <span class="drawer-link-num">03</span>
+      <span class="drawer-link-text">About Us</span>
+      <i class="fa-solid fa-arrow-right drawer-link-arrow"></i>
+    </a>
+    <a href="contact.html" class="drawer-link" onclick="closeMobile()">
+      <span class="drawer-link-num">04</span>
+      <span class="drawer-link-text">Contact</span>
+      <i class="fa-solid fa-arrow-right drawer-link-arrow"></i>
+    </a>
+  </nav>
+
+  <div class="drawer-cta">
+    <button class="drawer-order-btn ripple-btn" onclick="openOrderModal(); closeMobile();">
+      <i class="fa-solid fa-fire-burner"></i> Order Gas Now
+    </button>
+  </div>
+
+  <div class="drawer-footer">
+    <div class="drawer-contact-label">Get in touch</div>
+    <div class="drawer-contact-links">
+      <a href="tel:+256785239229" class="drawer-contact-link">
+        <i class="fa-solid fa-phone"></i> +256 785 239 229
+      </a>
+      <a href="https://wa.me/256785239229" target="_blank" class="drawer-contact-link">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+      </a>
+      <a href="mailto:energymukrite@gmail.com" class="drawer-contact-link">
+        <i class="fa-solid fa-envelope"></i> energymukrite@gmail.com
+      </a>
+    </div>
+  </div>
+</aside>
 
 <!-- ─── NAV ────────────────────────────────────────────── -->
 <nav id="navbar">
   <a href="index.html" class="nav-brand">
     <div class="nav-logo-mark">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <img src="lofo.png" alt="">
+      <svg class="nav-logo-svg" viewBox="318 288 244 314" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#57CB31" d="M427.115662,389.119812 C430.679413,385.697784 433.959351,382.498291 437.239319,379.298798 C436.871460,378.516052 436.503632,377.733337 436.135803,376.950592 C433.130798,377.442932 429.672607,377.151581 427.207275,378.577179 C420.303650,382.569305 413.805115,387.263123 407.160095,391.700104 C406.079773,392.421448 405.133545,393.359406 404.013916,394.003632 C390.229309,401.935211 383.944519,414.122681 383.032990,429.728851 C382.262390,442.922089 384.635437,455.693207 387.081482,468.508179 C389.149261,479.341522 391.118042,490.194183 393.038818,501.054565 C393.258820,502.298370 392.887848,503.646698 392.790894,504.946594 C392.357635,505.197540 391.924377,505.448517 391.491119,505.699493 C389.456543,502.672058 386.550934,499.904877 385.553680,496.567474 C382.766724,487.240753 376.765717,479.909882 371.539459,472.104950 C365.624786,463.271790 361.372345,453.700592 357.998657,443.700104 C355.876312,437.409058 353.990875,431.038086 351.787506,424.029694 C350.277527,425.122101 348.176178,426.244598 346.585144,427.867432 C341.682434,432.868317 336.984222,438.069305 332.187256,443.174438 C329.645966,445.879028 330.052185,448.587555 332.152588,451.267487 C336.783447,457.175995 341.380585,463.112976 346.117554,468.935822 C352.701569,477.029236 359.396912,485.032257 366.062042,493.059448 C366.455048,493.532776 367.010925,493.868652 367.478027,494.283112 C371.216187,497.599579 375.117279,500.753815 378.640564,504.284943 C382.185089,507.837280 385.004364,512.166138 388.765106,515.437805 C394.826538,520.711121 395.044647,526.826050 392.948578,533.627014 C384.650116,537.156494 383.919281,528.279175 379.640106,525.447876 C376.661499,523.477112 375.172180,519.257202 373.012665,516.045227 C372.649475,515.505005 372.381287,514.738342 371.867798,514.485596 C359.153564,508.229584 352.827515,495.460327 343.109039,486.148376 C336.126678,479.458160 330.355591,471.522858 323.702881,464.464630 C315.239899,455.485718 315.926575,439.195221 324.242462,430.687561 C333.826965,420.882019 344.311920,411.961029 353.999695,402.250732 C360.733978,395.500793 366.824860,388.104065 373.128174,380.930359 C381.623871,371.261597 389.886993,361.383087 398.556244,351.873840 C404.717010,345.116180 411.435211,338.869232 417.774200,332.269073 C418.846832,331.152222 419.944244,329.360229 419.861359,327.948792 C419.408325,320.233246 418.631714,312.535034 417.871399,304.840210 C417.655518,302.655426 417.121552,300.502045 416.733429,298.334259 C417.279205,297.985657 417.824982,297.637085 418.370758,297.288483 C420.611786,299.372162 423.093231,301.252472 425.055206,303.572144 C438.880402,319.917908 450.969208,337.490875 461.673035,356.022003 C462.240417,357.004242 462.953003,358.060730 463.050354,359.132416 C464.399475,373.985626 461.166534,387.135437 451.806305,399.478485 C443.457184,410.488220 432.299469,417.333649 421.896271,425.579254 C416.437256,429.906067 413.154602,437.002960 408.985596,442.916901 C407.867035,444.503632 407.370544,446.586823 406.087067,447.980255 C405.127594,449.021973 403.276489,449.921478 401.986908,449.736694 C401.154602,449.617401 400.071289,447.440369 400.033569,446.158081 C399.479004,427.315277 406.421295,411.181396 418.400818,397.037781 C420.839874,394.158142 424.002716,391.891571 426.831879,389.342377 z"/>
+        <path fill="#FC0A0A" d="M477.061035,493.306458 C483.511627,491.888367 484.466858,490.548767 484.884735,484.239838 C485.212555,479.290558 486.232819,474.390961 486.713654,469.446747 C487.112396,465.346710 487.278198,461.215668 487.352722,457.094879 C487.421753,453.279877 487.462921,449.436676 487.075073,445.651093 C486.824097,443.201324 485.869415,440.801819 485.053436,438.440857 C484.632202,437.222168 483.440704,436.195374 483.255737,434.981506 C482.078339,427.254242 480.992889,419.509460 480.106171,411.744263 C479.925354,410.160675 480.718872,408.465790 481.063263,406.822205 C481.521729,406.706207 481.980194,406.590210 482.438660,406.474243 C485.691162,411.112915 489.060150,415.674957 492.171875,420.406250 C498.624725,430.217560 505.623352,439.762207 511.038788,450.126495 C513.950378,455.698822 514.060059,462.738647 515.405579,469.122345 C515.637939,470.224762 515.320618,471.738220 515.951416,472.411987 C519.252075,475.937317 522.776428,479.253235 527.088928,483.493256 C524.065613,485.682709 521.283569,487.697418 518.501526,489.712128 C514.825989,493.765015 512.850769,499.557465 506.444092,501.755890 C504.947021,502.269592 504.055145,504.399719 502.748840,505.643280 C498.099396,510.069397 493.342285,514.383179 488.729431,518.846436 C486.858917,520.656311 485.388153,522.881958 483.501801,524.672241 C479.183594,528.770508 474.503021,532.505493 470.367340,536.773438 C463.618347,543.738281 456.819733,550.716797 450.769745,558.272217 C447.555725,562.285950 446.129791,567.562561 441.314545,570.642700 C440.113251,571.411133 440.434906,574.956665 440.502136,577.212524 C440.587860,580.086853 439.177429,582.011902 436.791687,580.575195 C433.168854,578.393616 428.751495,576.864319 427.654572,571.512756 C427.092346,568.769714 425.049530,565.664001 422.743713,564.074158 C416.735016,559.931030 414.386169,553.934631 411.715698,547.577087 C407.711365,538.044250 407.976562,528.501648 411.184357,519.400696 C413.691772,512.286743 416.734650,505.226532 424.759521,501.039154 C434.513275,495.949554 443.231873,488.891632 449.980835,479.787048 C451.201019,478.140991 453.589935,477.361267 455.439270,476.181549 C455.884277,476.644348 456.329315,477.107178 456.774323,477.569977 C455.812103,479.712463 454.787354,481.829346 453.898651,484.001923 C450.349640,492.678070 444.285400,499.321930 437.156738,505.188538 C433.455872,508.234222 429.855225,511.434326 426.475739,514.829834 C421.900543,519.426697 422.105072,523.623047 426.992920,528.086304 C431.998993,532.657593 433.128082,535.827332 441.515625,530.370789 C443.871094,528.838501 447.526642,529.387878 450.037384,527.994324 C455.953766,524.710388 462.619690,522.215942 465.578461,515.105591 C466.073578,513.915771 468.638214,513.657837 470.151611,512.801392 C471.718658,511.914581 473.862732,511.156769 474.536499,509.756531 C476.244324,506.207184 477.463043,502.379669 478.455780,498.554047 C478.770050,497.342834 477.751312,495.785706 477.107727,494.177429 C476.872864,493.967957 476.996002,493.526276 477.061035,493.306458 z"/>
       </svg>
     </div>
     <div class="nav-brand-name">
       Mukrite Energies
-      <span>A Smart future</span>
+      <span>A Smart Future</span>
     </div>
   </a>
   <ul class="nav-links">
@@ -1032,9 +1244,11 @@ footer {
     <li class="nav-link-item"><a href="contact.html">Contact</a></li>
   </ul>
   <a onclick="openOrderModal()" class="nav-cta ripple-btn">ORDER NOW</a>
-  <div class="hamburger" id="hamburger">
-    <span></span><span></span><span></span>
-  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span class="ham-bar"></span>
+    <span class="ham-bar"></span>
+    <span class="ham-bar"></span>
+  </button>
 </nav>
 
 <!-- ─── HERO ─────────────────────────────────────────── -->
@@ -1472,19 +1686,33 @@ window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 60);
 });
 
-/* ── MOBILE MENU ─────────────────────────────────────── */
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-const mobileClose = document.getElementById('mobileClose');
+/* ── MOBILE DRAWER ───────────────────────────────────── */
+const hamburger      = document.getElementById('hamburger');
+const mobileDrawer   = document.getElementById('mobileMenu');
+const drawerBackdrop = document.getElementById('drawerBackdrop');
+const mobileClose    = document.getElementById('mobileClose');
+
+function openMobile() {
+  hamburger.classList.add('is-open');
+  mobileDrawer.classList.add('is-open');
+  drawerBackdrop.classList.add('is-open');
+  hamburger.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobile() {
+  hamburger.classList.remove('is-open');
+  mobileDrawer.classList.remove('is-open');
+  drawerBackdrop.classList.remove('is-open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
 hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
+  hamburger.classList.contains('is-open') ? closeMobile() : openMobile();
 });
 mobileClose.addEventListener('click', closeMobile);
-function closeMobile() {
-  hamburger.classList.remove('open');
-  mobileMenu.classList.remove('open');
-}
+drawerBackdrop.addEventListener('click', closeMobile);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobile(); });
 
 /* ── RIPPLE ──────────────────────────────────────────── */
 document.querySelectorAll('.ripple-btn').forEach(btn => {
