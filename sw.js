@@ -1,12 +1,36 @@
 /* ═══════════════════════════════════════════════════════════
-   MUKRITE ENERGIES — Service Worker (Online Only)
-   PWA install support only — no caching
+   MUKRITE ENERGIES — Service Worker
+   Online-only + custom offline page
 ═══════════════════════════════════════════════════════════ */
 
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', () => self.clients.claim());
+const CACHE_NAME = 'mukrite-offline-v1';
+const OFFLINE_PAGE = '/pro-one/offline.html';
 
-/* Always fetch fresh from network */
+/* ── INSTALL: cache only the offline page ── */
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.add(OFFLINE_PAGE))
+  );
+  self.skipWaiting();
+});
+
+/* ── ACTIVATE: clear old caches ── */
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    )
+  );
+  self.clients.claim();
+});
+
+/* ── FETCH: always network first, offline page as fallback ── */
 self.addEventListener('fetch', event => {
-  event.respondWith(fetch(event.request));
+  if (event.request.method !== 'GET') return;
+
+  event.respondWith(
+    fetch(event.request).catch(() =>
+      caches.match(OFFLINE_PAGE)
+    )
+  );
 });
