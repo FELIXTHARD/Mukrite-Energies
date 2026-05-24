@@ -1,0 +1,19 @@
+{
+  "name": "Mukrite Energies",
+  "short_name": "Mukrite",
+  "description": "Uganda's trusted LPG gas supply specialists. Cylinder delivery, refilling, bulk and wholesale gas across all regions of Uganda.",
+  "start_url": "/pro-one/",
+  "scope": "/pro-one/",
+  "display": "standalone",
+  "background_color": "#0A5C36",
+  "theme_color": "#0A5C36",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "377x377",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
