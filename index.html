@@ -1894,5 +1894,16 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 })();
 </script>
 
+<!-- ── PWA: Register Service Worker ── -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/pro-one/sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+</script>
+
 </body>
 </html>
