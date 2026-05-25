@@ -336,24 +336,16 @@ section { padding: 7rem 5%; }
 ═══════════════════════════════════════════════════════════ */
 .page-hero { position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 140px 5% 5rem; }
 #page-services .page-hero,
+#page-about .page-hero,
 #page-contact .page-hero { min-height: 42vh; background: linear-gradient(135deg, var(--green) 0%, #041810 100%); }
 #page-services .page-hero::before,
+#page-about .page-hero::before,
 #page-contact .page-hero::before { content: ''; position: absolute; inset: 0; background: url('samples.jpeg') center/cover no-repeat; opacity: 0.08; }
 .page-hero-content { position: relative; z-index: 2; }
 .page-eyebrow { font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--green-light); font-weight: 600; margin-bottom: 0.8rem; }
 .page-title { font-family: Arial, Helvetica, sans-serif; font-size: clamp(2.5rem,6vw,5rem); font-weight: 800; color: #fff; line-height: 0.95; letter-spacing: -0.04em; }
 .page-title em { font-family: var(--ff-serif); font-style: italic; color: #FFD580; font-weight: 400; }
 .page-sub { color: rgba(255,255,255,0.6); font-size: 1rem; max-width: 520px; margin-top: 1.2rem; line-height: 1.7; }
-
-/* SUB-PAGE HERO (ABOUT — PHOTO BG) */
-#page-about .page-hero { min-height: 60vh; padding: 140px 5% 6rem; }
-.page-hero-bg { position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%; filter: brightness(0.3) saturate(1.1); }
-.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,92,54,0.82) 0%, rgba(4,24,16,0.7) 55%, rgba(0,0,0,0.5) 100%); }
-.page-hero-noise { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); opacity: 0.3; }
-#page-about .page-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; font-size: 0.72rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; animation: heroFadeUp 0.7s 0.2s ease both; }
-#page-about .page-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-light); }
-#page-about .page-title { font-family: var(--ff-display); font-size: clamp(3rem,7vw,6rem); font-weight: 800; line-height: 0.95; color: #fff; letter-spacing: -0.01em; margin-bottom: 1.4rem; animation: heroFadeUp 0.8s 0.4s ease both; }
-#page-about .page-sub { font-size: clamp(0.92rem,2.5vw,1.1rem); color: rgba(255,255,255,0.68); max-width: 540px; line-height: 1.75; animation: heroFadeUp 0.8s 0.6s ease both; margin-top: 0; }
 
 /* ═══════════════════════════════════════════════════════════
    SERVICES PAGE — FULL GRID
@@ -382,28 +374,35 @@ section { padding: 7rem 5%; }
 .step-title { font-family: var(--ff-display); font-size: 0.95rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem; }
 .step-desc { font-size: 0.9375rem; color: var(--slate-light); line-height: 1.65; }
 
-/* SERVICES — PRICING */
+/* SERVICES — PRICING TABLE */
 #page-services #pricing { background: var(--green); }
-.pricing-header { text-align: center; margin-bottom: 4rem; }
+.pricing-header { text-align: center; margin-bottom: 3.5rem; }
 .pricing-header .section-title { color: #fff; }
 .pricing-header .section-eyebrow { color: #FFD580; }
 .pricing-header .section-eyebrow::before { background: #FFD580; }
 .pricing-header .section-desc { color: rgba(255,255,255,0.6); margin: 0 auto; }
-.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
-.pricing-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 2.5rem 2rem; text-align: center; transition: background 0.3s, transform 0.3s; }
-.pricing-card.featured { background: #fff; border-color: #fff; transform: scale(1.04); }
-.pricing-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-4px); }
-.pricing-card.featured:hover { transform: scale(1.04) translateY(-4px); }
-.pricing-size { font-family: Arial, Helvetica, sans-serif; font-size: 2.75rem; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.03em; }
-.pricing-card.featured .pricing-size { color: var(--green); }
-.pricing-unit { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; }
-.pricing-card.featured .pricing-unit { color: var(--slate-light); }
-.pricing-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem; }
-.pricing-card.featured .pricing-label { color: var(--slate-light); }
-.pricing-use { font-size: 0.85rem; color: rgba(255,255,255,0.8); font-weight: 500; }
-.pricing-card.featured .pricing-use { color: var(--slate); }
-.pricing-badge { display: inline-block; background: var(--green-light); color: #fff; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; margin-bottom: 1rem; }
-.pricing-note { text-align: center; color: rgba(255,255,255,0.45); font-size: 0.875rem; margin-top: 2.5rem; }
+.pricing-table-wrap { max-width: 760px; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); }
+.pricing-table { width: 100%; border-collapse: collapse; }
+.pricing-table thead tr { background: rgba(255,255,255,0.12); }
+.pricing-table thead th { padding: 1rem 1.6rem; text-align: left; font-family: var(--ff-display); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.12); }
+.pricing-table thead th:not(:first-child) { text-align: right; }
+.pricing-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.08); transition: background 0.2s; }
+.pricing-table tbody tr:last-child { border-bottom: none; }
+.pricing-table tbody tr:hover { background: rgba(255,255,255,0.06); }
+.pricing-table tbody tr.pt-highlight { background: rgba(255,255,255,0.1); }
+.pricing-table tbody tr.pt-highlight:hover { background: rgba(255,255,255,0.15); }
+.pt-size { padding: 1.15rem 1.6rem; display: flex; align-items: center; gap: 1rem; }
+.pt-size-kg { font-family: Arial, Helvetica, sans-serif; font-size: 1.55rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; min-width: 58px; }
+.pt-highlight .pt-size-kg { color: #FFD580; }
+.pt-size-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.12em; }
+.pt-size-badge { display: inline-block; background: var(--green-light); color: #fff; font-size: 0.54rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 7px; border-radius: 100px; margin-top: 3px; }
+.pt-use { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 2px; }
+.pt-cell { padding: 1.15rem 1.6rem; text-align: right; vertical-align: middle; }
+.pt-price { font-family: Arial, Helvetica, sans-serif; font-size: 1.05rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+.pt-highlight .pt-price { color: #FFD580; }
+.pt-currency { font-size: 0.68rem; font-weight: 600; opacity: 0.6; display: block; letter-spacing: 0.08em; margin-bottom: 1px; }
+.pt-refill-ask { font-size: 0.75rem; color: rgba(255,255,255,0.4); font-style: italic; }
+.pricing-note { text-align: center; color: rgba(255,255,255,0.4); font-size: 0.82rem; margin-top: 2rem; line-height: 1.7; }
 
 /* SERVICES — CTA STRIP */
 .cta-strip { background: var(--off-white); border-top: 1px solid var(--border); padding: 5rem 5%; text-align: center; }
@@ -638,8 +637,15 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
   .hamburger { display: flex; }
   .services-full-grid { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; }
   .steps-grid { grid-template-columns: 1fr 1fr; }
+  .pricing-table-wrap { border-radius: 12px; }
+  .pricing-table thead th { padding: 0.8rem 1rem; font-size: 0.58rem; }
+  .pt-cell { padding: 0.9rem 1rem; }
+  .pt-size { gap: 0.7rem; }
+  .pt-size-kg { font-size: 1.2rem; min-width: 46px; }
+  .pt-size-label, .pt-use { font-size: 0.68rem; }
+  .pt-price { font-size: 0.92rem; }
+  .pt-currency { font-size: 0.6rem; }
   section { padding: 5rem 5%; }
   .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .values-grid { grid-template-columns: 1fr; }
@@ -802,7 +808,7 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
   <div class="ticker-section">
     <div class="ticker-inner">
       <div class="ticker-item highlight"><span class="bullet"></span> LPG Cylinders</div>
-      <div class="ticker-item"><span class="bullet"></span> 6kg · 12kg · 50kg</div>
+      <div class="ticker-item"><span class="bullet"></span> 6kg · 13kg · 50kg</div>
       <div class="ticker-item highlight"><span class="bullet"></span> Cylinder Refilling</div>
       <div class="ticker-item"><span class="bullet"></span> Bulk Industrial Supply</div>
       <div class="ticker-item highlight"><span class="bullet"></span> Wholesale &amp; Retail</div>
@@ -810,7 +816,7 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
       <div class="ticker-item highlight"><span class="bullet"></span> Nationwide Coverage</div>
       <div class="ticker-item"><span class="bullet"></span> Safety Certified</div>
       <div class="ticker-item highlight"><span class="bullet"></span> LPG Cylinders</div>
-      <div class="ticker-item"><span class="bullet"></span> 6kg · 12kg · 50kg</div>
+      <div class="ticker-item"><span class="bullet"></span> 6kg · 13kg · 50kg</div>
       <div class="ticker-item highlight"><span class="bullet"></span> Cylinder Refilling</div>
       <div class="ticker-item"><span class="bullet"></span> Bulk Industrial Supply</div>
       <div class="ticker-item highlight"><span class="bullet"></span> Wholesale &amp; Retail</div>
@@ -825,7 +831,7 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
     <div class="services-intro reveal">
       <div>
         <div class="section-eyebrow">What We Offer</div>
-        <h2 class="section-title">Gas Solutions<br>for <em>Every Need</em></h2>
+        <h2 class="section-title">Solutions<br>for <em>Every Need</em></h2>
       </div>
       <a href="#services" data-route="services" class="btn-outline-white" style="color:var(--green);border-color:var(--border-dark);display:inline-flex;align-items:center;gap:8px;">All Services <i class="fa-solid fa-arrow-right"></i></a>
     </div>
@@ -835,7 +841,7 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
         <div class="service-card-icon"><i class="fa-solid fa-house-chimney"></i></div>
         <div class="service-card-tag">Residential</div>
         <h3 class="service-card-title">Home Gas Supply</h3>
-        <p class="service-card-desc">Reliable LPG cylinder delivery for households across Uganda. Available in 6kg and 12kg sizes. Never run out of cooking gas again.</p>
+        <p class="service-card-desc">Reliable LPG cylinder delivery for households across Uganda. Available in 6kg and 13kg sizes. Never run out of cooking gas again.</p>
         <a href="#services" data-route="services" class="service-card-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
       </div>
       <div class="service-card reveal reveal-d2">
@@ -1052,7 +1058,7 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
         <h3 class="svc-title">Home Gas Supply</h3>
         <p class="svc-desc">Reliable LPG cylinder delivery for households across Uganda. Never run out of cooking gas again.</p>
         <ul class="svc-features">
-          <li><i class="fa-solid fa-check"></i> 6kg &amp; 12kg cylinders</li>
+          <li><i class="fa-solid fa-check"></i> 6kg &amp; 13kg cylinders</li>
           <li><i class="fa-solid fa-check"></i> Same-day delivery in Kampala</li>
           <li><i class="fa-solid fa-check"></i> Flexible payment options</li>
           <li><i class="fa-solid fa-check"></i> Monthly subscription available</li>
@@ -1065,7 +1071,7 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
         <h3 class="svc-title">Business &amp; Hospitality</h3>
         <p class="svc-desc">Bulk gas supply for restaurants, hotels, schools, and institutions. Flexible delivery schedules.</p>
         <ul class="svc-features">
-          <li><i class="fa-solid fa-check"></i> 12kg &amp; 50kg cylinders</li>
+          <li><i class="fa-solid fa-check"></i> 13kg &amp; 50kg cylinders</li>
           <li><i class="fa-solid fa-check"></i> Volume discount pricing</li>
           <li><i class="fa-solid fa-check"></i> Dedicated account manager</li>
           <li><i class="fa-solid fa-check"></i> Credit terms available</li>
@@ -1136,25 +1142,25 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
     </div>
     <div class="steps-grid" style="margin-top:4rem;">
       <div class="step reveal reveal-d1">
-        <div class="step-num">01</div>
+        <div class="step-num"></div>
         <div class="step-icon"><i class="fa-solid fa-mobile-screen"></i></div>
         <div class="step-title">Place Your Order</div>
         <p class="step-desc">Call us, WhatsApp, or click the Order Now button. Tell us what size and how many cylinders you need.</p>
       </div>
       <div class="step reveal reveal-d2">
-        <div class="step-num">02</div>
+        <div class="step-num"></div>
         <div class="step-icon"><i class="fa-solid fa-clipboard-check"></i></div>
         <div class="step-title">Confirm &amp; Pay</div>
         <p class="step-desc">Our team confirms your order and delivery time. Pay on delivery or via mobile money in advance.</p>
       </div>
       <div class="step reveal reveal-d3">
-        <div class="step-num">03</div>
+        <div class="step-num"></div>
         <div class="step-icon"><i class="fa-solid fa-truck"></i></div>
         <div class="step-title">We Deliver</div>
         <p class="step-desc">Our driver brings your gas safely to your door within 24–48 hours in Kampala and 72hrs upcountry.</p>
       </div>
       <div class="step reveal reveal-d3">
-        <div class="step-num">04</div>
+        <div class="step-num"></div>
         <div class="step-icon"><i class="fa-solid fa-fire-burner"></i></div>
         <div class="step-title">Cook Away!</div>
         <p class="step-desc">Enjoy uninterrupted cooking and energy. Reorder anytime — we keep track so you never run out.</p>
@@ -1165,32 +1171,91 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
   <!-- PRICING / CYLINDER SIZES -->
   <section id="pricing">
     <div class="pricing-header reveal">
-      <div class="section-eyebrow">Cylinder Sizes</div>
-      <h2 class="section-title">Choose Your<br><em>Cylinder Size</em></h2>
-      <p class="section-desc">We stock all standard LPG cylinder sizes to suit every home and business need.</p>
+      <div class="section-eyebrow">Cylinder Sizes &amp; Prices</div>
+      <h2 class="section-title">New Purchase<br><em>&amp; Refill Rates</em></h2>
+      <p class="section-desc">Transparent pricing across all cylinder sizes. Complete set includes cylinder, gas &amp; regulator.</p>
     </div>
-    <div class="pricing-grid">
-      <div class="pricing-card reveal reveal-d1">
-        <div class="pricing-size">6<span style="font-size:1.5rem;">kg</span></div>
-        <div class="pricing-unit">Small Cylinder</div>
-        <div class="pricing-label">Best for</div>
-        <div class="pricing-use">Small households, studios, hostels</div>
-      </div>
-      <div class="pricing-card featured reveal reveal-d2">
-        <div class="pricing-badge">Most Popular</div>
-        <div class="pricing-size">12<span style="font-size:1.5rem;">kg</span></div>
-        <div class="pricing-unit">Standard Cylinder</div>
-        <div class="pricing-label">Best for</div>
-        <div class="pricing-use">Family homes, restaurants, schools</div>
-      </div>
-      <div class="pricing-card reveal reveal-d3">
-        <div class="pricing-size">50<span style="font-size:1.5rem;">kg</span></div>
-        <div class="pricing-unit">Large Cylinder</div>
-        <div class="pricing-label">Best for</div>
-        <div class="pricing-use">Hotels, factories, institutions</div>
-      </div>
+
+    <div class="pricing-table-wrap reveal">
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Cylinder Size</th>
+            <th>New Purchase<br><span style="font-weight:400;opacity:0.7;">(Complete Set)</span></th>
+            <th>Refill Only</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pt-cell" style="text-align:left;">
+              <div class="pt-size">
+                <div class="pt-size-kg">3 kg</div>
+                <div>
+                  <div class="pt-size-label">Starter</div>
+                  <div class="pt-use">Single rooms, studios</div>
+                </div>
+              </div>
+            </td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">95,000</span></td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">27,000</span></td>
+          </tr>
+          <tr>
+            <td class="pt-cell" style="text-align:left;">
+              <div class="pt-size">
+                <div class="pt-size-kg">6 kg</div>
+                <div>
+                  <div class="pt-size-label">Small</div>
+                  <div class="pt-use">Small households, hostels</div>
+                </div>
+              </div>
+            </td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">125,000</span></td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">45,000</span></td>
+          </tr>
+          <tr class="pt-highlight">
+            <td class="pt-cell" style="text-align:left;">
+              <div class="pt-size">
+                <div class="pt-size-kg">13 kg</div>
+                <div>
+                  <div class="pt-size-label">Standard</div>
+                  <div class="pt-size-badge">Most Popular</div>
+                  <div class="pt-use">Families, restaurants, schools</div>
+                </div>
+              </div>
+            </td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">230,000</span></td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">90,000</span></td>
+          </tr>
+          <tr>
+            <td class="pt-cell" style="text-align:left;">
+              <div class="pt-size">
+                <div class="pt-size-kg">38 kg</div>
+                <div>
+                  <div class="pt-size-label">Commercial</div>
+                  <div class="pt-use">Caterers, canteens, bakeries</div>
+                </div>
+              </div>
+            </td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">570,000</span></td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">210,000</span></td>
+          </tr>
+          <tr>
+            <td class="pt-cell" style="text-align:left;">
+              <div class="pt-size">
+                <div class="pt-size-kg">45 kg</div>
+                <div>
+                  <div class="pt-size-label">Large</div>
+                  <div class="pt-use">Hotels, factories, institutions</div>
+                </div>
+              </div>
+            </td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">630,000</span></td>
+            <td class="pt-cell"><span class="pt-currency">UGX</span><span class="pt-price">250,000</span></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <p class="pricing-note reveal">Bulk and industrial orders available on request · <a href="#contact" data-route="contact" style="color:rgba(255,255,255,0.65);text-decoration:underline;">Contact us for custom pricing</a></p>
+    <p class="pricing-note reveal">Complete set includes cylinder + gas + regulator. · <a href="#contact" data-route="contact" style="color:rgba(255,255,255,0.6);text-decoration:underline;">Contact us</a> for bulk &amp; wholesale discounts.</p>
   </section>
 
   <!-- CTA STRIP -->
@@ -1213,12 +1278,9 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
 
   <!-- PAGE HERO -->
   <div class="page-hero">
-    <img class="page-hero-bg" src="workers.jpeg" alt="Mukrite team">
-    <div class="page-hero-overlay"></div>
-    <div class="page-hero-noise"></div>
     <div class="page-hero-content">
-      <div class="page-eyebrow"><span class="dot"></span> Our Story</div>
-      <h1 class="page-title">About <em>Mukrite</em><br>Energies</h1>
+      <div class="page-eyebrow">Our Story</div>
+      <h1 class="page-title">About <em>Mukrite</em></h1>
       <p class="page-sub">A Ugandan-owned energy company built on the belief that every home and business deserves safe, affordable, and reliable gas supply.</p>
     </div>
   </div>
@@ -1226,13 +1288,13 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
   <!-- TICKER -->
   <div class="ticker-section">
     <div class="ticker-inner">
-      <div class="ticker-item highlight"><span class="bullet"></span> Founded 2016</div>
+      <div class="ticker-item highlight"><span class="bullet"></span> Founded 2018</div>
       <div class="ticker-item"><span class="bullet"></span> 100% Ugandan Owned</div>
       <div class="ticker-item highlight"><span class="bullet"></span> 10,000+ Customers</div>
       <div class="ticker-item"><span class="bullet"></span> 4 Regions Covered</div>
       <div class="ticker-item highlight"><span class="bullet"></span> UNBS Certified</div>
       <div class="ticker-item"><span class="bullet"></span> 48hr Delivery</div>
-      <div class="ticker-item highlight"><span class="bullet"></span> Founded 2016</div>
+      <div class="ticker-item highlight"><span class="bullet"></span> Founded 2018</div>
       <div class="ticker-item"><span class="bullet"></span> 100% Ugandan Owned</div>
       <div class="ticker-item highlight"><span class="bullet"></span> 10,000+ Customers</div>
       <div class="ticker-item"><span class="bullet"></span> 4 Regions Covered</div>
@@ -1247,12 +1309,12 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
       <div class="story-img-wrap reveal-left">
         <img src="workers.jpeg" alt="Mukrite Energies team at work" class="story-img">
         <div class="story-img-overlay"></div>
-        <div class="story-badge"><div class="story-badge-num">2016</div><div class="story-badge-text">Founded</div></div>
+        <div class="story-badge"><div class="story-badge-num">2018</div><div class="story-badge-text">Founded</div></div>
       </div>
       <div class="story-text reveal-right">
         <div class="section-eyebrow">Who We Are</div>
         <h2 class="section-title">Uganda's Gas<br><em>Supply Specialists</em></h2>
-        <p>Mukrite Energies was founded in 2016 with a simple mission — to make LPG gas accessible, safe, and affordable for every Ugandan. What started as a small cylinder distribution business in Kampala has grown into one of Uganda's most trusted energy supply companies.</p>
+        <p>Mukrite Energies was founded in 2018 with a simple mission — to make LPG gas accessible, safe, and affordable for every Ugandan. What started as a small cylinder distribution business in Kampala has grown into one of Uganda's most trusted energy supply companies.</p>
         <p>We serve households, restaurants, hotels, schools, factories, and wholesale distributors across all four regions of Uganda. Our team of trained gas-handling professionals ensures every cylinder we supply meets UNBS safety standards.</p>
         <p>Today, Mukrite Energies operates from its headquarters in Makindye Boston, Kampala, with distribution networks spanning Central, Eastern, Western, and Northern Uganda. We are proud to be 100% Ugandan-owned and operated.</p>
         <div class="story-inline-stats">
@@ -1281,37 +1343,37 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
     </div>
     <div class="values-grid">
       <div class="value-card reveal reveal-d1">
-        <span class="value-num">01</span>
+        <span class="value-num"></span>
         <div class="value-icon"><i class="fa-solid fa-shield-halved"></i></div>
         <div class="value-title">Safety Above All</div>
         <p class="value-desc">Every cylinder is pressure-tested and UNBS certified before leaving our depot. Our staff are trained gas-handling professionals with zero compromise on safety.</p>
       </div>
       <div class="value-card reveal reveal-d2">
-        <span class="value-num">02</span>
+        <span class="value-num"></span>
         <div class="value-icon"><i class="fa-solid fa-tags"></i></div>
         <div class="value-title">Fair Pricing</div>
         <p class="value-desc">We believe every Ugandan deserves access to affordable cooking energy. We offer the most competitive rates in the market with transparent, no-hidden-fee pricing.</p>
       </div>
       <div class="value-card reveal reveal-d3">
-        <span class="value-num">03</span>
+        <span class="value-num"></span>
         <div class="value-icon"><i class="fa-solid fa-clock"></i></div>
         <div class="value-title">Reliability</div>
         <p class="value-desc">We show up when we say we will. Our logistics network is built to guarantee on-time delivery across Uganda — every single order, every single time.</p>
       </div>
       <div class="value-card reveal reveal-d1">
-        <span class="value-num">04</span>
+        <span class="value-num"></span>
         <div class="value-icon"><i class="fa-solid fa-handshake"></i></div>
         <div class="value-title">Community First</div>
         <p class="value-desc">As a Ugandan-owned business, we reinvest in the communities we serve. We support local dealers, create employment, and give back where we operate.</p>
       </div>
       <div class="value-card reveal reveal-d2">
-        <span class="value-num">05</span>
+        <span class="value-num"></span>
         <div class="value-icon"><i class="fa-solid fa-headset"></i></div>
         <div class="value-title">Dedicated Support</div>
         <p class="value-desc">A real person always picks up our phone. From first order to ongoing account management, our team is available to help you whenever you need us.</p>
       </div>
       <div class="value-card reveal reveal-d3">
-        <span class="value-num">06</span>
+        <span class="value-num"></span>
         <div class="value-icon"><i class="fa-solid fa-leaf"></i></div>
         <div class="value-title">Sustainability</div>
         <p class="value-desc">LPG burns cleaner than charcoal and firewood. Every customer we gain helps reduce deforestation and indoor air pollution — a mission we're proud of.</p>
@@ -1527,7 +1589,7 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
     <div>
       <div class="footer-brand-name">Mukrite Energies</div>
       <div class="footer-brand-sub">Gas Supply Specialists · Uganda</div>
-      <p class="footer-brand-desc">Uganda's trusted source for LPG cylinder supply, refilling, and bulk gas delivery. Serving homes, businesses, and industry since 2016.</p>
+      <p class="footer-brand-desc">Uganda's trusted source for LPG cylinder supply, refilling, and bulk gas delivery. Serving homes, businesses, and industry since 2018.</p>
       <div class="footer-socials">
         <a class="footer-social" href="https://tiktok.com/@mukriteenergies" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
         <a class="footer-social" href="https://x.com/MukriteEnergy" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
@@ -1590,10 +1652,23 @@ footer { background: #041810; color: rgba(255,255,255,0.6); padding: 5rem 5% 2re
           <label for="o-size">Cylinder Size</label>
           <select id="o-size" required>
             <option value="" disabled selected>Select size</option>
-            <option value="6kg">6 kg</option>
-            <option value="12kg">12 kg</option>
-            <option value="50kg">50 kg</option>
-            <option value="bulk">Bulk / Industrial</option>
+            <optgroup label="── New Purchase (Complete Set)">
+              <option value="3kg — New Purchase / Complete Set (UGX 95,000)">3 kg — Complete Set (UGX 95,000)</option>
+              <option value="6kg — New Purchase / Complete Set (UGX 125,000)">6 kg — Complete Set (UGX 125,000)</option>
+              <option value="13kg — New Purchase / Complete Set (UGX 230,000)">13 kg — Complete Set (UGX 230,000)</option>
+              <option value="38kg — New Purchase / Complete Set (UGX 570,000)">38 kg — Complete Set (UGX 570,000)</option>
+              <option value="45kg — New Purchase / Complete Set (UGX 630,000)">45 kg — Complete Set (UGX 630,000)</option>
+            </optgroup>
+            <optgroup label="── Refill Only">
+              <option value="3kg — Refill Only (UGX 27,000)">3 kg — Refill (UGX 27,000)</option>
+              <option value="6kg — Refill Only (UGX 45,000)">6 kg — Refill (UGX 45,000)</option>
+              <option value="13kg — Refill Only (UGX 90,000)">13 kg — Refill (UGX 90,000)</option>
+              <option value="38kg — Refill Only (UGX 210,000)">38 kg — Refill (UGX 210,000)</option>
+              <option value="45kg — Refill Only (UGX 250,000)">45 kg — Refill (UGX 250,000)</option>
+            </optgroup>
+            <optgroup label="── Other">
+              <option value="Bulk / Industrial">Bulk / Industrial</option>
+            </optgroup>
           </select>
         </div>
         <div class="form-field"><label for="o-qty">Quantity</label><input type="number" id="o-qty" placeholder="e.g. 2" min="1" required></div>
