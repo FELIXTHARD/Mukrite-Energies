@@ -1,17 +1,20 @@
-const CACHE = 'mukrite-v1';
+const CACHE = 'mukrite-v2';
 
-// Files to cache immediately on install
-const PRECACHE = [
-  '/',
-  '/index.html',
-  '/offline.html',
-  '/manifest.json',
-];
-
-// ── Install: pre-cache shell ──
+// ── Install: cache each file individually so one failure doesn't kill all ──
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(PRECACHE))
+    caches.open(CACHE).then(cache => {
+      // Cache offline.html first — it's the only critical file
+      // Each fetch is independent; a missing manifest.json won't break anything
+      const files = ['/', '/index.html', '/offline.html', '/manifest.json'];
+      return Promise.allSettled(
+        files.map(url =>
+          fetch(url).then(res => {
+            if (res.ok) return cache.put(url, res);
+          }).catch(() => {/* ignore — file may not exist */})
+        )
+      );
+    })
   );
   self.skipWaiting();
 });
@@ -26,43 +29,38 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// ── Fetch: network-first, fall back to cache, then offline page ──
+// ── Fetch ──
 self.addEventListener('fetch', event => {
-  // Only handle GET requests for same-origin or navigation
   if (event.request.method !== 'GET') return;
 
-  const url = new URL(event.request.url);
-
-  // For navigation requests (page loads): network → cache → offline.html
+  // Navigation requests: network-first → cache → offline page
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
         .then(res => {
-          // Cache a fresh copy
           const clone = res.clone();
           caches.open(CACHE).then(cache => cache.put(event.request, clone));
           return res;
         })
         .catch(() =>
-          caches.match(event.request)
+          caches.match('/index.html')
             .then(cached => cached || caches.match('/offline.html'))
         )
     );
     return;
   }
 
-  // For other assets: cache-first, then network
+  // Assets: cache-first → network
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(res => {
-        const clone = res.clone();
-        caches.open(CACHE).then(cache => cache.put(event.request, clone));
+        if (res.ok) {
+          const clone = res.clone();
+          caches.open(CACHE).then(cache => cache.put(event.request, clone));
+        }
         return res;
-      }).catch(() => {
-        // For image requests, return nothing gracefully
-        if (event.request.destination === 'image') return new Response('', { status: 404 });
-      });
+      }).catch(() => new Response('', { status: 404 }));
     })
   );
 });
