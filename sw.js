@@ -1,16 +1,555 @@
-const CACHE = 'mukrite-v5';
+const CACHE = 'mukrite-v6';
 
-// ── Install: explicitly fetch and store offline.html ──
-self.addEventListener('install', event => {
-  event.waitUntil(
-    fetch('/offline.html', { cache: 'reload' })
-      .then(res => {
-        if (!res.ok) throw new Error('offline.html fetch failed: ' + res.status);
-        return caches.open(CACHE).then(cache => cache.put('/offline.html', res));
-      })
-  );
-  self.skipWaiting();
-});
+// Full offline page embedded — no cache dependency, always works
+const OFFLINE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mukrite Energies — You're Offline</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='318 288 244 314' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2357CB31' d='M427.115662,389.119812 C430.679413,385.697784 433.959351,382.498291 437.239319,379.298798 C436.871460,378.516052 436.503632,377.733337 436.135803,376.950592 C433.130798,377.442932 429.672607,377.151581 427.207275,378.577179 C420.303650,382.569305 413.805115,387.263123 407.160095,391.700104 C406.079773,392.421448 405.133545,393.359406 404.013916,394.003632 C390.229309,401.935211 383.944519,414.122681 383.032990,429.728851 C382.262390,442.922089 384.635437,455.693207 387.081482,468.508179 C389.149261,479.341522 391.118042,490.194183 393.038818,501.054565 C393.258820,502.298370 392.887848,503.646698 392.790894,504.946594 C392.357635,505.197540 391.924377,505.448517 391.491119,505.699493 C389.456543,502.672058 386.550934,499.904877 385.553680,496.567474 C382.766724,487.240753 376.765717,479.909882 371.539459,472.104950 C365.624786,463.271790 361.372345,453.700592 357.998657,443.700104 C355.876312,437.409058 353.990875,431.038086 351.787506,424.029694 C350.277527,425.122101 348.176178,426.244598 346.585144,427.867432 C341.682434,432.868317 336.984222,438.069305 332.187256,443.174438 C329.645966,445.879028 330.052185,448.587555 332.152588,451.267487 C336.783447,457.175995 341.380585,463.112976 346.117554,468.935822 C352.701569,477.029236 359.396912,485.032257 366.062042,493.059448 C366.455048,493.532776 367.010925,493.868652 367.478027,494.283112 C371.216187,497.599579 375.117279,500.753815 378.640564,504.284943 C382.185089,507.837280 385.004364,512.166138 388.765106,515.437805 C394.826538,520.711121 395.044647,526.826050 392.948578,533.627014 C384.650116,537.156494 383.919281,528.279175 379.640106,525.447876 C376.661499,523.477112 375.172180,519.257202 373.012665,516.045227 C372.649475,515.505005 372.381287,514.738342 371.867798,514.485596 C359.153564,508.229584 352.827515,495.460327 343.109039,486.148376 C336.126678,479.458160 330.355591,471.522858 323.702881,464.464630 C315.239899,455.485718 315.926575,439.195221 324.242462,430.687561 C333.826965,420.882019 344.311920,411.961029 353.999695,402.250732 C360.733978,395.500793 366.824860,388.104065 373.128174,380.930359 C381.623871,371.261597 389.886993,361.383087 398.556244,351.873840 C404.717010,345.116180 411.435211,338.869232 417.774200,332.269073 C418.846832,331.152222 419.944244,329.360229 419.861359,327.948792 C419.408325,320.233246 418.631714,312.535034 417.871399,304.840210 C417.655518,302.655426 417.121552,300.502045 416.733429,298.334259 C417.279205,297.985657 417.824982,297.637085 418.370758,297.288483 C420.611786,299.372162 423.093231,301.252472 425.055206,303.572144 C438.880402,319.917908 450.969208,337.490875 461.673035,356.022003 C462.240417,357.004242 462.953003,358.060730 463.050354,359.132416 C464.399475,373.985626 461.166534,387.135437 451.806305,399.478485 C443.457184,410.488220 432.299469,417.333649 421.896271,425.579254 C416.437256,429.906067 413.154602,437.002960 408.985596,442.916901 C407.867035,444.503632 407.370544,446.586823 406.087067,447.980255 C405.127594,449.021973 403.276489,449.921478 401.986908,449.736694 C401.154602,449.617401 400.071289,447.440369 400.033569,446.158081 C399.479004,427.315277 406.421295,411.181396 418.400818,397.037781 C420.839874,394.158142 424.002716,391.891571 426.831879,389.342377 z'/%3E%3Cpath fill='%23FC0A0A' d='M477.061035,493.306458 C483.511627,491.888367 484.466858,490.548767 484.884735,484.239838 C485.212555,479.290558 486.232819,474.390961 486.713654,469.446747 C487.112396,465.346710 487.278198,461.215668 487.352722,457.094879 C487.421753,453.279877 487.462921,449.436676 487.075073,445.651093 C486.824097,443.201324 485.869415,440.801819 485.053436,438.440857 C484.632202,437.222168 483.440704,436.195374 483.255737,434.981506 C482.078339,427.254242 480.992889,419.509460 480.106171,411.744263 C479.925354,410.160675 480.718872,408.465790 481.063263,406.822205 C481.521729,406.706207 481.980194,406.590210 482.438660,406.474243 C485.691162,411.112915 489.060150,415.674957 492.171875,420.406250 C498.624725,430.217560 505.623352,439.762207 511.038788,450.126495 C513.950378,455.698822 514.060059,462.738647 515.405579,469.122345 C515.637939,470.224762 515.320618,471.738220 515.951416,472.411987 C519.252075,475.937317 522.776428,479.253235 527.088928,483.493256 C524.065613,485.682709 521.283569,487.697418 518.501526,489.712128 C514.825989,493.765015 512.850769,499.557465 506.444092,501.755890 C504.947021,502.269592 504.055145,504.399719 502.748840,505.643280 C498.099396,510.069397 493.342285,514.383179 488.729431,518.846436 C486.858917,520.656311 485.388153,522.881958 483.501801,524.672241 C479.183594,528.770508 474.503021,532.505493 470.367340,536.773438 C463.618347,543.738281 456.819733,550.716797 450.769745,558.272217 C447.555725,562.285950 446.129791,567.562561 441.314545,570.642700 C440.113251,571.411133 440.434906,574.956665 440.502136,577.212524 C440.587860,580.086853 439.177429,582.011902 436.791687,580.575195 C433.168854,578.393616 428.751495,576.864319 427.654572,571.512756 C427.092346,568.769714 425.049530,565.664001 422.743713,564.074158 C416.735016,559.931030 414.386169,553.934631 411.715698,547.577087 C407.711365,538.044250 407.976562,528.501648 411.184357,519.400696 C413.691772,512.286743 416.734650,505.226532 424.759521,501.039154 C434.513275,495.949554 443.231873,488.891632 449.980835,479.787048 C451.201019,478.140991 453.589935,477.361267 455.439270,476.181549 C455.884277,476.644348 456.329315,477.107178 456.774323,477.569977 C455.812103,479.712463 454.787354,481.829346 453.898651,484.001923 C450.349640,492.678070 444.285400,499.321930 437.156738,505.188538 C433.455872,508.234222 429.855225,511.434326 426.475739,514.829834 C421.900543,519.426697 422.105072,523.623047 426.992920,528.086304 C431.998993,532.657593 433.128082,535.827332 441.515625,530.370789 C443.871094,528.838501 447.526642,529.387878 450.037384,527.994324 C455.953766,524.710388 462.619690,522.215942 465.578461,515.105591 C466.073578,513.915771 468.638214,513.657837 470.151611,512.801392 C471.718658,511.914581 473.862732,511.156769 474.536499,509.756531 C476.244324,506.207184 477.463043,502.379669 478.455780,498.554047 C478.770050,497.342834 477.751312,495.785706 477.107727,494.177429 C476.872864,493.967957 476.996002,493.526276 477.061035,493.306458 z'/%3E%3C/svg%3E">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:        #0A5C36;
+  --green-mid:    #0D7A49;
+  --green-light:  #12A362;
+  --green-glow:   rgba(18,163,98,0.15);
+  --red:          #D42B2B;
+  --white:        #ffffff;
+  --bg:           #060f09;
+  --surface:      rgba(255,255,255,0.04);
+  --border:       rgba(255,255,255,0.08);
+  --text-dim:     rgba(255,255,255,0.35);
+  --text-mid:     rgba(255,255,255,0.6);
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--white);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* subtle grid texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(10,92,54,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,92,54,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* green radial glow bottom-left */
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -120px;
+  left: -80px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(10,92,54,0.28) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── LAYOUT ── */
+.page {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px 0;
+  flex-shrink: 0;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.brand-logo { width: 26px; height: 26px; display: block; flex-shrink: 0; }
+
+.brand-name {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+}
+
+/* Battery widget */
+.battery-widget {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.battery-label {
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  letter-spacing: 0.04em;
+  min-width: 36px;
+  text-align: right;
+}
+
+.battery-shell {
+  position: relative;
+  width: 36px;
+  height: 18px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.battery-shell::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 8px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 0 2px 2px 0;
+}
+
+.battery-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--green-light);
+  transition: width 0.6s ease, background 0.6s ease;
+}
+
+.battery-fill.low   { background: var(--red); }
+.battery-fill.mid   { background: #e8a020; }
+.battery-fill.full  { background: var(--green-light); }
+
+/* ── MAIN CONTENT ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+  gap: 0;
+}
+
+/* Clock */
+.clock-block {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.clock-time {
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Mono', monospace;
+  font-size: clamp(4rem, 20vw, 7rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--white);
+  position: relative;
+}
+
+.clock-colon {
+  animation: blink 1s step-end infinite;
+  display: inline-block;
+  margin: 0 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.15; }
+}
+
+.clock-seconds {
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Mono', monospace;
+  font-size: clamp(1rem, 5vw, 1.6rem);
+  font-weight: 300;
+  color: var(--green-light);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+  display: block;
+}
+
+.clock-ampm {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 10px;
+  display: block;
+}
+
+/* Date */
+.date-block {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.date-day {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  font-weight: 300;
+  color: var(--text-mid);
+  letter-spacing: 0.06em;
+}
+
+.date-sep {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--green-light);
+  vertical-align: middle;
+  margin: 0 10px 2px;
+  opacity: 0.7;
+}
+
+/* Divider */
+.rule {
+  width: 100%;
+  max-width: 320px;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 28px;
+  flex-shrink: 0;
+}
+
+/* Offline status pill */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 13px 5px 9px;
+  background: rgba(212,43,43,0.12);
+  border: 1px solid rgba(212,43,43,0.28);
+  border-radius: 100px;
+  margin-bottom: 14px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.75); }
+}
+
+.status-text {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(212,43,43,0.85);
+}
+
+/* Offline message */
+.offline-msg {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text-mid);
+  text-align: center;
+  line-height: 1.65;
+  max-width: 280px;
+  margin-bottom: 28px;
+}
+
+/* Contact cards */
+.contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 20px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--white);
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.contact-card:active {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.16);
+  transform: scale(0.985);
+}
+
+.contact-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.contact-icon.call  { background: rgba(18,163,98,0.18); border: 1px solid rgba(18,163,98,0.25); }
+.contact-icon.wa    { background: rgba(37,211,102,0.14); border: 1px solid rgba(37,211,102,0.22); }
+
+.contact-info { text-align: left; flex: 1; }
+
+.contact-label {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+
+.contact-value {
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+/* Retry button */
+.retry-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.retry-btn:active { background: var(--green-mid); transform: scale(0.98); }
+
+.retry-icon {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-top-color: #fff;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.retry-btn.spinning .retry-icon {
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── BOTTOM BAR ── */
+.bottom-bar {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 0 0 20px;
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Top bar: brand + battery -->
+  <div class="top-bar">
+    <div class="brand-row">
+      <svg class="brand-logo" viewBox="318 288 244 314" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#57CB31" d="M427.115662,389.119812 C430.679413,385.697784 433.959351,382.498291 437.239319,379.298798 C436.871460,378.516052 436.503632,377.733337 436.135803,376.950592 C433.130798,377.442932 429.672607,377.151581 427.207275,378.577179 C420.303650,382.569305 413.805115,387.263123 407.160095,391.700104 C406.079773,392.421448 405.133545,393.359406 404.013916,394.003632 C390.229309,401.935211 383.944519,414.122681 383.032990,429.728851 C382.262390,442.922089 384.635437,455.693207 387.081482,468.508179 C389.149261,479.341522 391.118042,490.194183 393.038818,501.054565 C393.258820,502.298370 392.887848,503.646698 392.790894,504.946594 C392.357635,505.197540 391.924377,505.448517 391.491119,505.699493 C389.456543,502.672058 386.550934,499.904877 385.553680,496.567474 C382.766724,487.240753 376.765717,479.909882 371.539459,472.104950 C365.624786,463.271790 361.372345,453.700592 357.998657,443.700104 C355.876312,437.409058 353.990875,431.038086 351.787506,424.029694 C350.277527,425.122101 348.176178,426.244598 346.585144,427.867432 C341.682434,432.868317 336.984222,438.069305 332.187256,443.174438 C329.645966,445.879028 330.052185,448.587555 332.152588,451.267487 C336.783447,457.175995 341.380585,463.112976 346.117554,468.935822 C352.701569,477.029236 359.396912,485.032257 366.062042,493.059448 C366.455048,493.532776 367.010925,493.868652 367.478027,494.283112 C371.216187,497.599579 375.117279,500.753815 378.640564,504.284943 C382.185089,507.837280 385.004364,512.166138 388.765106,515.437805 C394.826538,520.711121 395.044647,526.826050 392.948578,533.627014 C384.650116,537.156494 383.919281,528.279175 379.640106,525.447876 C376.661499,523.477112 375.172180,519.257202 373.012665,516.045227 C372.649475,515.505005 372.381287,514.738342 371.867798,514.485596 C359.153564,508.229584 352.827515,495.460327 343.109039,486.148376 C336.126678,479.458160 330.355591,471.522858 323.702881,464.464630 C315.239899,455.485718 315.926575,439.195221 324.242462,430.687561 C333.826965,420.882019 344.311920,411.961029 353.999695,402.250732 C360.733978,395.500793 366.824860,388.104065 373.128174,380.930359 C381.623871,371.261597 389.886993,361.383087 398.556244,351.873840 C404.717010,345.116180 411.435211,338.869232 417.774200,332.269073 C418.846832,331.152222 419.944244,329.360229 419.861359,327.948792 C419.408325,320.233246 418.631714,312.535034 417.871399,304.840210 C417.655518,302.655426 417.121552,300.502045 416.733429,298.334259 C417.279205,297.985657 417.824982,297.637085 418.370758,297.288483 C420.611786,299.372162 423.093231,301.252472 425.055206,303.572144 C438.880402,319.917908 450.969208,337.490875 461.673035,356.022003 C462.240417,357.004242 462.953003,358.060730 463.050354,359.132416 C464.399475,373.985626 461.166534,387.135437 451.806305,399.478485 C443.457184,410.488220 432.299469,417.333649 421.896271,425.579254 C416.437256,429.906067 413.154602,437.002960 408.985596,442.916901 C407.867035,444.503632 407.370544,446.586823 406.087067,447.980255 C405.127594,449.021973 403.276489,449.921478 401.986908,449.736694 C401.154602,449.617401 400.071289,447.440369 400.033569,446.158081 C399.479004,427.315277 406.421295,411.181396 418.400818,397.037781 C420.839874,394.158142 424.002716,391.891571 426.831879,389.342377 z"/>
+        <path fill="#FC0A0A" d="M477.061035,493.306458 C483.511627,491.888367 484.466858,490.548767 484.884735,484.239838 C485.212555,479.290558 486.232819,474.390961 486.713654,469.446747 C487.112396,465.346710 487.278198,461.215668 487.352722,457.094879 C487.421753,453.279877 487.462921,449.436676 487.075073,445.651093 C486.824097,443.201324 485.869415,440.801819 485.053436,438.440857 C484.632202,437.222168 483.440704,436.195374 483.255737,434.981506 C482.078339,427.254242 480.992889,419.509460 480.106171,411.744263 C479.925354,410.160675 480.718872,408.465790 481.063263,406.822205 C481.521729,406.706207 481.980194,406.590210 482.438660,406.474243 C485.691162,411.112915 489.060150,415.674957 492.171875,420.406250 C498.624725,430.217560 505.623352,439.762207 511.038788,450.126495 C513.950378,455.698822 514.060059,462.738647 515.405579,469.122345 C515.637939,470.224762 515.320618,471.738220 515.951416,472.411987 C519.252075,475.937317 522.776428,479.253235 527.088928,483.493256 C524.065613,485.682709 521.283569,487.697418 518.501526,489.712128 C514.825989,493.765015 512.850769,499.557465 506.444092,501.755890 C504.947021,502.269592 504.055145,504.399719 502.748840,505.643280 C498.099396,510.069397 493.342285,514.383179 488.729431,518.846436 C486.858917,520.656311 485.388153,522.881958 483.501801,524.672241 C479.183594,528.770508 474.503021,532.505493 470.367340,536.773438 C463.618347,543.738281 456.819733,550.716797 450.769745,558.272217 C447.555725,562.285950 446.129791,567.562561 441.314545,570.642700 C440.113251,571.411133 440.434906,574.956665 440.502136,577.212524 C440.587860,580.086853 439.177429,582.011902 436.791687,580.575195 C433.168854,578.393616 428.751495,576.864319 427.654572,571.512756 C427.092346,568.769714 425.049530,565.664001 422.743713,564.074158 C416.735016,559.931030 414.386169,553.934631 411.715698,547.577087 C407.711365,538.044250 407.976562,528.501648 411.184357,519.400696 C413.691772,512.286743 416.734650,505.226532 424.759521,501.039154 C434.513275,495.949554 443.231873,488.891632 449.980835,479.787048 C451.201019,478.140991 453.589935,477.361267 455.439270,476.181549 C455.884277,476.644348 456.329315,477.107178 456.774323,477.569977 C455.812103,479.712463 454.787354,481.829346 453.898651,484.001923 C450.349640,492.678070 444.285400,499.321930 437.156738,505.188538 C433.455872,508.234222 429.855225,511.434326 426.475739,514.829834 C421.900543,519.426697 422.105072,523.623047 426.992920,528.086304 C431.998993,532.657593 433.128082,535.827332 441.515625,530.370789 C443.871094,528.838501 447.526642,529.387878 450.037384,527.994324 C455.953766,524.710388 462.619690,522.215942 465.578461,515.105591 C466.073578,513.915771 468.638214,513.657837 470.151611,512.801392 C471.718658,511.914581 473.862732,511.156769 474.536499,509.756531 C476.244324,506.207184 477.463043,502.379669 478.455780,498.554047 C478.770050,497.342834 477.751312,495.785706 477.107727,494.177429 C476.872864,493.967957 476.996002,493.526276 477.061035,493.306458 z"/>
+      </svg>
+      <span class="brand-name">Mukrite Energies</span>
+    </div>
+
+    <div class="battery-widget">
+      <span class="battery-label" id="battPct">—%</span>
+      <div class="battery-shell">
+        <div class="battery-fill" id="battFill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+
+    <!-- Clock -->
+    <div class="clock-block">
+      <div class="clock-time">
+        <span id="clockH">00</span><span class="clock-colon">:</span><span id="clockM">00</span>
+      </div>
+      <span class="clock-seconds" id="clockS">00</span>
+      <span class="clock-ampm" id="clockAMPM">AM</span>
+    </div>
+
+    <!-- Date -->
+    <div class="date-block">
+      <span class="date-day" id="dateStr">Monday</span>
+      <span class="date-sep"></span>
+      <span class="date-day" id="dateNum">1 January 2025</span>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- Offline pill -->
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      <span class="status-text">No Connection</span>
+    </div>
+
+    <p class="offline-msg">Check your Wi-Fi or mobile data, then try again. You can still reach us directly below.</p>
+
+    <!-- Contacts -->
+    <div class="contacts">
+      <a class="contact-card" href="tel:+256785239229">
+        <div class="contact-icon call">📞</div>
+        <div class="contact-info">
+          <div class="contact-label">Call Us</div>
+          <div class="contact-value">+256 785 239 229</div>
+        </div>
+      </a>
+      <a class="contact-card" href="https://wa.me/256785239229" target="_blank">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-info">
+          <div class="contact-label">WhatsApp</div>
+          <div class="contact-value">Order via Chat</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Retry -->
+    <button class="retry-btn" id="retryBtn" onclick="handleRetry()">
+      <div class="retry-icon" id="retryIcon"></div>
+      Try Again
+    </button>
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">felixthard.github.io/pro-one</div>
+
+</div>
+
+<script>
+// ── Clock ──
+function tick() {
+  const now  = new Date();
+  let   h    = now.getHours();
+  const m    = now.getMinutes();
+  const s    = now.getSeconds();
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+
+  document.getElementById('clockH').textContent    = String(h).padStart(2, '0');
+  document.getElementById('clockM').textContent    = String(m).padStart(2, '0');
+  document.getElementById('clockS').textContent    = String(s).padStart(2, '0');
+  document.getElementById('clockAMPM').textContent = ampm;
+}
+
+// ── Date ──
+function updateDate() {
+  const now  = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const mons = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('dateStr').textContent = days[now.getDay()];
+  document.getElementById('dateNum').textContent = \`\${now.getDate()} \${mons[now.getMonth()]} \${now.getFullYear()}\`;
+}
+
+tick(); updateDate();
+setInterval(tick, 1000);
+setInterval(updateDate, 60000);
+
+// ── Battery ──
+async function updateBattery(batt) {
+  const pct  = Math.round(batt.level * 100);
+  const fill = document.getElementById('battFill');
+  const lbl  = document.getElementById('battPct');
+  lbl.textContent = pct + '%';
+  fill.style.width = pct + '%';
+  fill.className = 'battery-fill ' + (pct <= 20 ? 'low' : pct <= 50 ? 'mid' : 'full');
+}
+
+if (navigator.getBattery) {
+  navigator.getBattery().then(batt => {
+    updateBattery(batt);
+    batt.addEventListener('levelchange',    () => updateBattery(batt));
+    batt.addEventListener('chargingchange', () => updateBattery(batt));
+  });
+} else {
+  document.querySelector('.battery-widget').style.display = 'none';
+}
+
+// ── Retry ──
+function handleRetry() {
+  const btn  = document.getElementById('retryBtn');
+  const icon = document.getElementById('retryIcon');
+  btn.classList.add('spinning');
+  btn.disabled = true;
+  setTimeout(() => { window.location.reload(); }, 600);
+}
+
+// Auto-reload when connection returns
+window.addEventListener('online', () => window.location.reload());
+</script>
+
+</body>
+</html>
+`;
+
+// ── Install: minimal, just activate fast ──
+self.addEventListener('install', () => self.skipWaiting());
 
 // ── Activate: wipe old caches ──
 self.addEventListener('activate', event => {
@@ -27,31 +566,20 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   if (!event.request.url.startsWith('http')) return;
 
-  // Navigation: network → offline.html from named cache → inline fallback
+  // Navigation: try network, serve embedded offline page on failure
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(async () => {
-        const cache  = await caches.open(CACHE);
-        const cached = await cache.match('/offline.html');
-        if (cached) return cached;
-        // Ultimate fallback if cache somehow empty
-        return new Response(
-          `<!DOCTYPE html><html><head><meta charset="UTF-8">
-           <title>Offline</title></head><body style="font-family:sans-serif;
-           background:#060f09;color:#fff;display:flex;align-items:center;
-           justify-content:center;height:100vh;margin:0;text-align:center">
-           <div><h1 style="color:#12A362">Mukrite Energies</h1>
-           <p>You are offline. Please check your connection.</p>
-           <p>Call us: <a href="tel:+256785239229" style="color:#12A362">
-           +256 785 239 229</a></p></div></body></html>`,
-          { status: 200, headers: { 'Content-Type': 'text/html' } }
-        );
-      })
+      fetch(event.request).catch(() =>
+        new Response(OFFLINE_HTML, {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        })
+      )
     );
     return;
   }
 
-  // Assets: cache-first → network
+  // Assets: cache-first → network → cache on success
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
