@@ -1,23 +1,16 @@
-const CACHE = 'mukrite-v3';
+const CACHE = 'mukrite-v4';
 
-// ── Install: cache files individually — one failure won't break the rest ──
+// ── Install: only cache offline.html — the one file we MUST have offline ──
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE).then(cache => {
-      const files = ['/', '/index.html', '/offline.html', '/manifest.json'];
-      return Promise.allSettled(
-        files.map(url =>
-          fetch(url).then(res => {
-            if (res.ok) return cache.put(url, res);
-          }).catch(() => {/* skip missing files silently */})
-        )
-      );
-    })
+    caches.open(CACHE).then(cache =>
+      cache.add(new Request('/offline.html', { cache: 'reload' }))
+    )
   );
   self.skipWaiting();
 });
 
-// ── Activate: remove old caches ──
+// ── Activate: wipe old caches ──
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -30,35 +23,24 @@ self.addEventListener('activate', event => {
 // ── Fetch ──
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
-
-  // Skip chrome-extension://, data:, blob: and any non-http(s) scheme
   if (!event.request.url.startsWith('http')) return;
 
-  // Navigation requests: network-first → cached index → offline page
+  // Navigation: network-first → offline.html fallback
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request)
-        .then(res => {
-          const clone = res.clone();
-          caches.open(CACHE).then(cache => cache.put(event.request, clone));
-          return res;
-        })
-        .catch(() =>
-          caches.match('/index.html')
-            .then(cached => cached || caches.match('/offline.html'))
-        )
+      fetch(event.request).catch(() => caches.match('/offline.html'))
     );
     return;
   }
 
-  // Assets: cache-first → network → silent fail
+  // Assets: cache-first → network → cache on success
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(res => {
         if (res.ok) {
           const clone = res.clone();
-          caches.open(CACHE).then(cache => cache.put(event.request, clone));
+          caches.open(CACHE).then(c => c.put(event.request, clone));
         }
         return res;
       }).catch(() => new Response('', { status: 404 }));
