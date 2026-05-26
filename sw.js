@@ -1,17 +1,15 @@
-const CACHE = 'mukrite-v2';
+const CACHE = 'mukrite-v3';
 
-// ── Install: cache each file individually so one failure doesn't kill all ──
+// ── Install: cache files individually — one failure won't break the rest ──
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE).then(cache => {
-      // Cache offline.html first — it's the only critical file
-      // Each fetch is independent; a missing manifest.json won't break anything
       const files = ['/', '/index.html', '/offline.html', '/manifest.json'];
       return Promise.allSettled(
         files.map(url =>
           fetch(url).then(res => {
             if (res.ok) return cache.put(url, res);
-          }).catch(() => {/* ignore — file may not exist */})
+          }).catch(() => {/* skip missing files silently */})
         )
       );
     })
@@ -33,7 +31,10 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
-  // Navigation requests: network-first → cache → offline page
+  // Skip chrome-extension://, data:, blob: and any non-http(s) scheme
+  if (!event.request.url.startsWith('http')) return;
+
+  // Navigation requests: network-first → cached index → offline page
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -50,7 +51,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Assets: cache-first → network
+  // Assets: cache-first → network → silent fail
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;

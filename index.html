@@ -1857,6 +1857,7 @@ document.addEventListener('mousemove', function(e) {
   card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
 });
 document.addEventListener('mouseleave', function(e) {
+  if (!e.target || typeof e.target.closest !== 'function') return;
   const card = e.target.closest('.service-card');
   if (card) card.style.transform = '';
 }, true);
