@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mukrite-energies",
+  "name": "mukriteenergies",
   "compatibility_date": "2026-07-12",
   // Static-assets-only Worker: serves the Next.js static export from `out/`.
   "assets": {
