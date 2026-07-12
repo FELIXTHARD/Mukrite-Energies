@@ -5,20 +5,20 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#0A5C36",
+  "background_color": "#052E1C",
   "theme_color": "#0A5C36",
   "orientation": "portrait-primary",
   "lang": "en-UG",
   "categories": ["shopping", "utilities"],
   "icons": [
     {
-      "src": "apple-touch-icon.png",
+      "src": "/apple-touch-icon.png",
       "sizes": "377x377",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "apple-touch-icon.png",
+      "src": "/apple-touch-icon.png",
       "sizes": "377x377",
       "type": "image/png",
       "purpose": "maskable"
@@ -26,23 +26,23 @@
   ],
   "shortcuts": [
     {
-      "name": "Place Order",
+      "name": "Order Gas",
       "short_name": "Order",
-      "description": "Order LPG gas via WhatsApp",
-      "url": "/pro-one/#order",
-      "icons": [{ "src": "apple-touch-icon.png", "sizes": "377x377" }]
+      "description": "Order LPG gas from Mukrite Energies",
+      "url": "/services",
+      "icons": [{ "src": "/apple-touch-icon.png", "sizes": "377x377" }]
     },
     {
-      "name": "Call Us",
-      "short_name": "Call",
-      "description": "Call Mukrite Energies directly",
-      "url": "/pro-one/#contact",
-      "icons": [{ "src": "apple-touch-icon.png", "sizes": "377x377" }]
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Call or WhatsApp Mukrite Energies",
+      "url": "/contact",
+      "icons": [{ "src": "/apple-touch-icon.png", "sizes": "377x377" }]
     }
   ],
   "screenshots": [
     {
-      "src": "og-image.jpg",
+      "src": "/images/og-image.jpg",
       "sizes": "1200x630",
       "type": "image/jpeg",
       "label": "Mukrite Energies Home"
