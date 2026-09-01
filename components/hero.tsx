@@ -11,6 +11,7 @@ const SLIDES = [
   { src: "/images/samples.jpeg", alt: "Mukrite Energies LPG cylinders" },
   { src: "/images/workers.jpeg", alt: "Mukrite Energies delivery team" },
   { src: "/images/16.jpeg", alt: "Mukrite Energies depot operations" },
+  { src: "/images/filling-plant.jpeg", alt: "Mukrite Energies certified filling plant" },
 ];
 
 /* Rotating promo banners, like the ad strip on rubisuganda.com */
@@ -32,6 +33,12 @@ const PROMOS = [
     kicker: "Partnership",
     title: "Become a Mukrite Dealer",
     text: "Wholesale pricing & priority supply",
+  },
+  {
+    img: "/images/family-cooking.jpeg",
+    kicker: "Clean Cooking",
+    title: "Cleaner Air at Home",
+    text: "Swap charcoal & kerosene for safe LPG",
   },
 ];
 

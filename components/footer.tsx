@@ -6,7 +6,9 @@ import { CONTACT, waLink } from "@/lib/data";
 
 const ABOUT_LINKS = [
   { label: "Our Story", href: "/about" },
+  { label: "Our Team", href: "/team" },
   { label: "Core Values", href: "/about#values" },
+  { label: "CSR Programme", href: "/csr" },
   { label: "Coverage Regions", href: "/about#regions" },
   { label: "Gallery", href: "/about#gallery" },
   { label: "Become a Dealer", href: "/contact" },

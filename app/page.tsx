@@ -7,6 +7,7 @@ import {
   Clock,
   Headset,
   MapPin,
+  Leaf,
 } from "lucide-react";
 import { Hero } from "@/components/hero";
 import { SectionHeading, Accent } from "@/components/section-heading";
@@ -14,7 +15,7 @@ import { Reveal } from "@/components/reveal";
 import { Counter } from "@/components/counter";
 import { Testimonials } from "@/components/testimonials";
 import { CtaBanner } from "@/components/cta-banner";
-import { REGIONS, SERVICES } from "@/lib/data";
+import { CSR_PILLARS, REGIONS, SERVICES, TEAM } from "@/lib/data";
 
 /* Product-card images, matched to each service */
 const SERVICE_IMAGES: Record<string, string> = {
@@ -228,6 +229,80 @@ export default function HomePage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Clean-cooking commitment (CSR teaser) ── */}
+      <section className="noise relative overflow-hidden bg-deep py-20 md:py-24">
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-14 px-5 md:px-10 lg:grid-cols-2">
+          <Reveal direction="left" className="relative">
+            <div className="relative overflow-hidden rounded-3xl">
+              <Image
+                src="/images/family-cooking.jpeg"
+                alt="A Ugandan family cooking together on a Mukrite Energies LPG cylinder"
+                width={860}
+                height={720}
+                className="aspect-[6/5] w-full object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-6 left-5 flex items-center gap-3 rounded-2xl bg-brand px-6 py-4 text-white shadow-brand-lg">
+              <Leaf className="size-6 text-gold" strokeWidth={1.75} />
+              <span className="font-body text-[0.65rem] font-bold uppercase leading-tight tracking-[0.14em]">
+                2,500+ households
+                <br />
+                cooking cleaner
+              </span>
+            </div>
+          </Reveal>
+
+          <Reveal direction="right">
+            <SectionHeading
+              eyebrow="Corporate Social Responsibility"
+              title={
+                <>
+                  Clean Energy.{" "}
+                  <Accent color="gold">Cleaner Air.</Accent> Stronger
+                  Communities.
+                </>
+              }
+              desc="Our Climate & Environmental Conservation Programme drives Uganda's shift away from charcoal, firewood and kerosene — through advocacy, activism and community education."
+              dark
+            />
+            <div className="mt-8 space-y-3">
+              {CSR_PILLARS.map((p) => (
+                <div
+                  key={p.title}
+                  className="flex gap-4 rounded-lg border border-white/12 bg-white/5 p-5 backdrop-blur transition-colors hover:border-brand-bright/40 hover:bg-white/10"
+                >
+                  <span className="font-display text-lg font-bold text-brand-bright">
+                    {p.no}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-base font-bold text-white">
+                      {p.title}
+                    </h3>
+                    <p className="mt-1 font-body text-sm leading-relaxed text-white/60">
+                      {p.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3.5">
+              <Link
+                href="/csr"
+                className="inline-flex items-center gap-2 rounded-md bg-brand px-6 py-3.5 font-display text-[0.95rem] font-bold text-white transition-colors hover:bg-brand-mid"
+              >
+                Explore the Programme <ArrowRight className="size-4" />
+              </Link>
+              <Link
+                href="/team"
+                className="inline-flex items-center gap-2 rounded-md bg-white/12 px-6 py-3.5 font-display text-[0.95rem] font-bold text-white backdrop-blur transition-colors hover:bg-white/25"
+              >
+                Meet our team ({TEAM.length})
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -304,4 +304,75 @@ export const GALLERY = [
   { src: "/images/22.jpeg", caption: "Depot inspection" },
   { src: "/images/23.jpeg", caption: "Ready for dispatch" },
   { src: "/images/24.jpeg", caption: "Serving Uganda" },
+  { src: "/images/hillside-sign.jpeg", caption: "Mukrite Energies UG Ltd" },
+  { src: "/images/filling-plant.jpeg", caption: "Certified filling plant" },
+  { src: "/images/plant-team.jpeg", caption: "Cylinder store & stock" },
+  { src: "/images/product-range.jpeg", caption: "Clean. Safe. Reliable." },
+];
+
+/* ── Management team ── */
+export type TeamMember = {
+  name: string;
+  initials: string;
+  role: string;
+  bio: string;
+};
+
+export const TEAM: TeamMember[] = [
+  {
+    name: "Mukhwana Ronald",
+    initials: "MR",
+    role: "Managing Director",
+    bio: "Leads Mukrite Energies' overall strategy and operations, driving the company's growth as a local LPG cylinder manufacturing and clean-cooking distribution enterprise.",
+  },
+  {
+    name: "Namono Mary",
+    initials: "NM",
+    role: "Chief Finance Officer",
+    bio: "Oversees the company's financial management and planning, supporting sustainable growth of the household and micro-hub distribution network.",
+  },
+  {
+    name: "Ssegawa Solomon",
+    initials: "SS",
+    role: "Marketing Lead",
+    bio: "Drives market growth and customer engagement, building awareness of clean-cooking adoption among households and communities.",
+  },
+  {
+    name: "Atukunda Haggai",
+    initials: "AH",
+    role: "Partnerships & Community Liaison",
+    bio: "Builds and manages strategic partnerships that expand Mukrite Energies' reach and support delivery of its climate and community programmes.",
+  },
+];
+
+/* ── CSR: Climate & Environmental Conservation Programme ── */
+export const CSR_FRAMEWORKS = [
+  "Paris Agreement & Uganda NDC",
+  "UN SDGs 3 · 5 · 7 · 13 · 15",
+  "WLPGA Cooking for Life",
+];
+
+export const CSR_PILLARS = [
+  {
+    no: "01",
+    title: "Advocacy",
+    desc: "Engaging policymakers, industry bodies and the media to strengthen the enabling environment for clean cooking and emissions reduction in Uganda.",
+  },
+  {
+    no: "02",
+    title: "Activism",
+    desc: "Visible, on-the-ground action — tree-planting, clean-up drives and safe-appliance campaigns — that demonstrates our commitment beyond statements.",
+  },
+  {
+    no: "03",
+    title: "Education & Outreach",
+    desc: "Building grassroots understanding of clean energy choices and their impact on health, household economics and the environment.",
+  },
+];
+
+export const CSR_IMPACT = [
+  { value: 2500, suffix: "+", label: "Clean-cooking households served" },
+  { value: 18, suffix: "%", label: "Month-on-month refill growth" },
+  { value: 3200, suffix: " MT", label: "CO₂e avoided annually" },
+  { value: 32000, suffix: " MT", label: "CO₂e/yr target — 24-month roadmap" },
 ];

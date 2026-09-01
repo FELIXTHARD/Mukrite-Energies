@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ShieldCheck,
   BadgePercent,
@@ -8,6 +9,7 @@ import {
   Headset,
   Leaf,
   MapPin,
+  ArrowRight,
 } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SectionHeading, Accent } from "@/components/section-heading";
@@ -208,6 +210,72 @@ export default function AboutPage() {
                     ))}
                   </div>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Explore more: team + CSR ── */}
+      <section className="bg-cream py-24">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <SectionHeading
+            eyebrow="Go Deeper"
+            title={
+              <>
+                More About <Accent>Mukrite</Accent>
+              </>
+            }
+            desc="The people who lead the company, and the climate programme that shapes how we grow."
+            align="center"
+          />
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
+            {[
+              {
+                href: "/team",
+                img: "/images/plant-team.jpeg",
+                eyebrow: "Leadership",
+                title: "Our Team",
+                desc: "Meet the management team combining energy operations, finance, marketing and partnerships expertise.",
+              },
+              {
+                href: "/csr",
+                img: "/images/family-cooking.jpeg",
+                eyebrow: "Corporate Social Responsibility",
+                title: "Climate & Conservation",
+                desc: "Our flagship CSR programme — advocacy, activism and education driving Uganda's clean-cooking transition.",
+              },
+            ].map((c, i) => (
+              <Reveal key={c.href} delay={i * 0.1}>
+                <Link
+                  href={c.href}
+                  className="group relative block h-full overflow-hidden rounded-3xl"
+                >
+                  <div className="relative aspect-[16/11]">
+                    <Image
+                      src={c.img}
+                      alt={c.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/35 to-transparent" />
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 p-8">
+                    <p className="font-body text-[0.68rem] font-bold uppercase tracking-[0.24em] text-gold">
+                      {c.eyebrow}
+                    </p>
+                    <h3 className="mt-1.5 font-display text-2xl font-bold text-white">
+                      {c.title}
+                    </h3>
+                    <p className="mt-2 max-w-md font-body text-sm leading-relaxed text-white/75">
+                      {c.desc}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-2 font-display text-sm font-bold text-white transition-colors group-hover:text-gold">
+                      Read More <ArrowRight className="size-4" />
+                    </span>
+                  </div>
+                </Link>
               </Reveal>
             ))}
           </div>

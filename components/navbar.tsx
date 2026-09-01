@@ -13,7 +13,6 @@ import {
   Factory,
   RotateCw,
   Truck,
-  Handshake,
   BookOpenText,
   HeartHandshake,
   Images,
@@ -21,6 +20,8 @@ import {
   ShieldCheck,
   Tag,
   Mail,
+  Users,
+  Leaf,
   type LucideIcon,
 } from "lucide-react";
 import { FlameLogo } from "@/components/logo";
@@ -29,15 +30,18 @@ import { useApp } from "@/components/providers";
 import { CONTACT, waLink } from "@/lib/data";
 
 type MenuItem = { label: string; href: string; icon: LucideIcon };
-type Menu = { label: string; href: string; items?: MenuItem[] };
+type Menu = { label: string; href: string; items?: MenuItem[]; match?: string[] };
 
 const MENUS: Menu[] = [
   {
     label: "About Us",
     href: "/about",
+    match: ["/about", "/team", "/csr"],
     items: [
       { label: "Our Story", href: "/about", icon: BookOpenText },
+      { label: "Our Team", href: "/team", icon: Users },
       { label: "Core Values", href: "/about#values", icon: HeartHandshake },
+      { label: "CSR Programme", href: "/csr", icon: Leaf },
       { label: "Coverage Regions", href: "/about#regions", icon: MapPinned },
       { label: "Gallery", href: "/about#gallery", icon: Images },
     ],
@@ -67,10 +71,12 @@ const MENUS: Menu[] = [
 
 const DRAWER_LINKS = [
   { label: "About Us", href: "/about" },
+  { label: "Our Team", href: "/team" },
   { label: "Our Services", href: "/services" },
   { label: "Gas Prices", href: "/services#pricing" },
   { label: "Safety Guide", href: "/services#safety" },
   { label: "Gallery", href: "/about#gallery" },
+  { label: "CSR Programme", href: "/csr" },
   { label: "Contact Us", href: "/contact" },
 ];
 
@@ -132,10 +138,9 @@ export function Navbar() {
           {/* Desktop menu */}
           <ul className="hidden items-center gap-8 md:flex">
             {MENUS.map((m) => {
-              const active =
-                m.href === "/contact"
-                  ? pathname === "/contact"
-                  : pathname === m.href.split("#")[0] && m.href !== "/contact";
+              const active = (m.match ?? [m.href.split("#")[0]]).includes(
+                pathname,
+              );
               const isOpen = openMenu === m.label;
               return (
                 <li
