@@ -388,3 +388,274 @@ export const CSR_IMPACT = [
   { value: 3200, suffix: " MT", label: "CO₂e avoided annually" },
   { value: 32000, suffix: " MT", label: "CO₂e/yr target — 24-month roadmap" },
 ];
+
+/* ── Media: YouTube videos ── */
+export type VideoCategory = "Company" | "Safety" | "Community" | "How-To";
+
+export const VIDEO_CATEGORIES: VideoCategory[] = [
+  "Company",
+  "Safety",
+  "Community",
+  "How-To",
+];
+
+export type Video = {
+  /**
+   * YouTube video ID — the part after `v=` in a watch URL
+   * (`https://youtube.com/watch?v=ABC123xyz` becomes `"ABC123xyz"`).
+   * Leave empty and the card renders a "coming soon" state instead of a player.
+   */
+  youtubeId: string;
+  title: string;
+  desc: string;
+  /**
+   * Local still used as the card thumbnail. Nothing is requested from YouTube
+   * until the visitor presses play, which keeps the page fast and cookie-free.
+   */
+  poster: string;
+  category: VideoCategory;
+  /** Display only, e.g. "4:12". */
+  duration: string;
+};
+
+export const VIDEOS: Video[] = [
+  {
+    youtubeId: "",
+    title: "Inside Our Certified Filling Plant",
+    desc: "A walk through the depot where every Mukrite cylinder is inspected, pressure-tested and filled to UNBS standard.",
+    poster: "/images/filling-plant.jpeg",
+    category: "Company",
+    duration: "4:12",
+  },
+  {
+    youtubeId: "",
+    title: "How to Connect Your Cylinder Safely",
+    desc: "Step by step: fitting the regulator, checking for leaks with soapy water, and the three things never to do in your kitchen.",
+    poster: "/images/howto.jpeg",
+    category: "How-To",
+    duration: "3:05",
+  },
+  {
+    youtubeId: "",
+    title: "Zero Emissions Day — Community Drive",
+    desc: "Highlights from our Climate and Environmental Conservation Programme's flagship day of action across Kampala.",
+    poster: "/images/hillside-sign.jpeg",
+    category: "Community",
+    duration: "5:48",
+  },
+  {
+    youtubeId: "",
+    title: "Cylinder Sizes Explained — 3kg to 45kg",
+    desc: "Which cylinder fits your home, restaurant or factory, how long each one lasts, and what a complete set includes.",
+    poster: "/images/product-range.jpeg",
+    category: "How-To",
+    duration: "2:37",
+  },
+  {
+    youtubeId: "",
+    title: "Meet the Delivery Team",
+    desc: "The riders and drivers who get gas to your door in 24–48 hours, and how they keep every load safe on the road.",
+    poster: "/images/workers.jpeg",
+    category: "Company",
+    duration: "3:51",
+  },
+  {
+    youtubeId: "",
+    title: "From Charcoal to Clean Cooking",
+    desc: "Ugandan families on what changed after they switched to LPG — the cost, the smoke, and the time saved.",
+    poster: "/images/family-cooking.jpeg",
+    category: "Community",
+    duration: "6:20",
+  },
+];
+
+/** Privacy-preserving embed URL — youtube-nocookie, autoplaying on open. */
+export const youtubeEmbed = (id: string) =>
+  `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+
+export const youtubeWatch = (id: string) =>
+  `https://www.youtube.com/watch?v=${id}`;
+
+/* ── Media: events ── */
+export type EventItem = {
+  slug: string;
+  title: string;
+  /** ISO date (YYYY-MM-DD) the event starts. Drives the upcoming/past split. */
+  date: string;
+  /** ISO date the event ends. Omit for single-day events. */
+  endDate?: string;
+  time: string;
+  venue: string;
+  location: string;
+  desc: string;
+  image: string;
+  tag: string;
+  /** Upcoming events: what a visitor gets by turning up. */
+  highlights?: string[];
+  /** Past events: what the event actually delivered. */
+  outcomes?: string[];
+};
+
+/**
+ * The date the upcoming/past split is rendered against at build time. The site
+ * is a static export, so the timeline re-splits against the real clock once it
+ * mounts — this constant only keeps server and client markup identical on the
+ * first paint. Bump it whenever you edit the list below.
+ */
+export const EVENTS_AS_OF = "2026-09-01";
+
+/** Last instant of an event's final day — it stays "upcoming" all day. */
+export const eventEndMs = (e: EventItem) =>
+  new Date(`${e.endDate ?? e.date}T23:59:59`).getTime();
+
+/** "21 September 2026", or "17–18 October 2026" for a multi-day event. */
+export const eventDateLabel = (e: EventItem) => {
+  const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
+    new Date(`${iso}T12:00:00`).toLocaleDateString("en-GB", opts);
+  const long: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  if (!e.endDate) return fmt(e.date, long);
+  const sameMonth = e.date.slice(0, 7) === e.endDate.slice(0, 7);
+  return sameMonth
+    ? `${fmt(e.date, { day: "numeric" })}–${fmt(e.endDate, long)}`
+    : `${fmt(e.date, { day: "numeric", month: "long" })} – ${fmt(e.endDate, long)}`;
+};
+
+export const EVENTS: EventItem[] = [
+  {
+    slug: "zero-emissions-day-2026",
+    title: "Zero Emissions Day Community Drive",
+    date: "2026-09-21",
+    time: "9:00 AM – 4:00 PM",
+    venue: "Makindye Boston Grounds",
+    location: "Kampala",
+    tag: "Climate Programme",
+    desc: "Our Climate and Environmental Conservation Programme's flagship day of action. Households, schools and policymakers meet to mark Zero Emissions Day with clean-cooking demonstrations and a tree-planting drive.",
+    image: "/images/hillside-sign.jpeg",
+    highlights: [
+      "Live LPG cooking demonstrations",
+      "Free cylinder safety inspections",
+      "Tree seedlings for every household",
+      "Switch-to-gas discount on the day",
+    ],
+  },
+  {
+    slug: "nakawa-safety-clinic",
+    title: "Clean Cooking Safety Clinic",
+    date: "2026-10-03",
+    time: "10:00 AM – 3:00 PM",
+    venue: "Nakawa Market",
+    location: "Kampala",
+    tag: "Safety",
+    desc: "A walk-in clinic for market vendors and nearby households. Bring any cylinder — whatever the brand — for a free leak test, regulator check and hands-on safety briefing.",
+    image: "/images/howto.jpeg",
+    highlights: [
+      "Free leak and regulator testing",
+      "Hands-on handling training",
+      "Damaged-cylinder trade-in offer",
+      "Safety guides in Luganda and English",
+    ],
+  },
+  {
+    slug: "dealer-training-october",
+    title: "Dealer & Sub-Distributor Training",
+    date: "2026-10-17",
+    endDate: "2026-10-18",
+    time: "8:30 AM – 5:00 PM daily",
+    venue: "Mukrite Depot, Makindye",
+    location: "Kampala",
+    tag: "Partners",
+    desc: "Two days for current and prospective dealers covering safe storage, stock handling, UNBS compliance and the wholesale pricing tiers — plus how to apply for credit terms.",
+    image: "/images/plant-team.jpeg",
+    highlights: [
+      "UNBS compliance walkthrough",
+      "Wholesale pricing and credit terms",
+      "Depot storage and stock rotation",
+      "Certificate on completion",
+    ],
+  },
+  {
+    slug: "mbarara-depot-open-day",
+    title: "Mbarara Regional Depot Open Day",
+    date: "2026-11-07",
+    time: "9:00 AM – 2:00 PM",
+    venue: "Mbarara Distribution Hub",
+    location: "Mbarara",
+    tag: "Western Region",
+    desc: "We open the doors of our western hub to customers, hoteliers and caterers. Tour the filling floor, meet the regional team and set up a bulk supply account on the spot.",
+    image: "/images/filling-plant.jpeg",
+    highlights: [
+      "Guided filling-floor tour",
+      "Bulk supply account sign-up",
+      "Hospitality sector pricing",
+      "Meet the western region team",
+    ],
+  },
+  {
+    slug: "makindye-switch-campaign",
+    title: "Makindye Household Switch Campaign",
+    date: "2026-08-15",
+    time: "8:00 AM – 5:00 PM",
+    venue: "Makindye Division",
+    location: "Kampala",
+    tag: "Outreach",
+    desc: "A week-long door-to-door campaign helping charcoal-using households move to LPG, with subsidised starter sets and in-home installation.",
+    image: "/images/family-cooking.jpeg",
+    outcomes: [
+      "412 households switched to LPG",
+      "380 starter sets installed in-home",
+      "Every household given a safety briefing",
+    ],
+  },
+  {
+    slug: "wakiso-tree-planting",
+    title: "World Environment Day Tree-Planting",
+    date: "2026-06-05",
+    time: "7:30 AM – 1:00 PM",
+    venue: "Wakiso District",
+    location: "Wakiso",
+    tag: "Activism",
+    desc: "Staff, dealers and community volunteers planted indigenous seedlings on degraded land, tying our clean-cooking work to visible restoration on the ground.",
+    image: "/images/18.jpeg",
+    outcomes: [
+      "1,800 indigenous seedlings planted",
+      "6 schools and 3 dealer teams took part",
+      "Two-year maintenance plan agreed",
+    ],
+  },
+  {
+    slug: "jinja-hospitality-forum",
+    title: "Jinja Hospitality Bulk-Gas Forum",
+    date: "2026-04-24",
+    time: "2:00 PM – 6:00 PM",
+    venue: "Jinja Resort Conference Hall",
+    location: "Jinja",
+    tag: "Commercial",
+    desc: "Hotel and restaurant operators across the eastern region met our commercial team to work through bulk supply scheduling, 45kg economics and kitchen safety compliance.",
+    image: "/images/product-range.jpeg",
+    outcomes: [
+      "37 hospitality businesses attended",
+      "14 new bulk supply accounts opened",
+      "Regional delivery schedule agreed",
+    ],
+  },
+  {
+    slug: "schools-clean-air-outreach",
+    title: "Schools Clean-Air Outreach",
+    date: "2026-02-20",
+    time: "9:00 AM – 12:00 PM",
+    venue: "Six schools across Kampala",
+    location: "Kampala",
+    tag: "Education",
+    desc: "Classroom sessions on indoor air pollution, deforestation and safe gas handling, delivered alongside kitchen assessments for each school's catering staff.",
+    image: "/images/workers.jpeg",
+    outcomes: [
+      "1,240 pupils reached",
+      "6 school kitchens assessed and upgraded",
+      "Catering staff certified in safe handling",
+    ],
+  },
+];

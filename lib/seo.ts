@@ -1,4 +1,4 @@
-import { CONTACT, CYLINDERS, FAQS, ugx } from "@/lib/data";
+import { CONTACT, CYLINDERS, EVENTS, FAQS, ugx } from "@/lib/data";
 
 /** Canonical site origin — override via NEXT_PUBLIC_SITE_URL when the domain changes. */
 export const SITE_URL =
@@ -144,3 +144,36 @@ export const faqJsonLd = {
 /** Serialize JSON-LD safely for a <script> tag. */
 export const jsonLd = (data: object) =>
   JSON.stringify(data).replace(/</g, "\\u003c");
+
+/** Event listings for the media centre — helps upcoming events surface in search. */
+export const eventsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `${SITE_NAME} Events`,
+  itemListElement: EVENTS.map((e, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Event",
+      "@id": `${SITE_URL}/media#${e.slug}`,
+      name: e.title,
+      description: e.desc,
+      startDate: e.date,
+      endDate: e.endDate ?? e.date,
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
+      image: `${SITE_URL}${e.image}`,
+      url: `${SITE_URL}/media`,
+      organizer: { "@id": `${SITE_URL}/#organization` },
+      location: {
+        "@type": "Place",
+        name: e.venue,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: e.location,
+          addressCountry: "UG",
+        },
+      },
+    },
+  })),
+};

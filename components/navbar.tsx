@@ -22,6 +22,9 @@ import {
   Mail,
   Users,
   Leaf,
+  PlayCircle,
+  CalendarClock,
+  History,
   type LucideIcon,
 } from "lucide-react";
 import { FlameLogo } from "@/components/logo";
@@ -60,9 +63,13 @@ const MENUS: Menu[] = [
   },
   {
     label: "Media",
-    href: "/about#gallery",
+    href: "/media",
+    match: ["/media"],
     items: [
-      { label: "Gallery", href: "/about#gallery", icon: Images },
+      { label: "Videos", href: "/media#videos", icon: PlayCircle },
+      { label: "Upcoming Events", href: "/media#upcoming", icon: CalendarClock },
+      { label: "Past Events", href: "/media#past", icon: History },
+      { label: "Gallery", href: "/media#gallery", icon: Images },
       { label: "Safety Guide", href: "/services#safety", icon: ShieldCheck },
     ],
   },
@@ -75,7 +82,10 @@ const DRAWER_LINKS = [
   { label: "Our Services", href: "/services" },
   { label: "Gas Prices", href: "/services#pricing" },
   { label: "Safety Guide", href: "/services#safety" },
-  { label: "Gallery", href: "/about#gallery" },
+  { label: "Videos", href: "/media#videos" },
+  { label: "Upcoming Events", href: "/media#upcoming" },
+  { label: "Past Events", href: "/media#past" },
+  { label: "Gallery", href: "/media#gallery" },
   { label: "CSR Programme", href: "/csr" },
   { label: "Contact Us", href: "/contact" },
 ];

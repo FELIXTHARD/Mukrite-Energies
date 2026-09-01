@@ -10,7 +10,7 @@ const ABOUT_LINKS = [
   { label: "Core Values", href: "/about#values" },
   { label: "CSR Programme", href: "/csr" },
   { label: "Coverage Regions", href: "/about#regions" },
-  { label: "Gallery", href: "/about#gallery" },
+  { label: "Media Centre", href: "/media" },
   { label: "Become a Dealer", href: "/contact" },
 ];
 
@@ -20,6 +20,8 @@ const SERVICE_LINKS = [
   { label: "Commercial Supply", href: "/services" },
   { label: "Industrial Bulk Gas", href: "/services" },
   { label: "Gas Prices", href: "/services#pricing" },
+  { label: "Videos", href: "/media#videos" },
+  { label: "Upcoming Events", href: "/media#upcoming" },
 ];
 
 export function Footer() {
