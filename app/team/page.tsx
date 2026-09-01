@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Briefcase, Users, HeartHandshake } from "lucide-react";
+import { ArrowRight, Briefcase, Users, HeartHandshake, Mail } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SectionHeading, Accent } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { CtaBanner } from "@/components/cta-banner";
-import { TEAM } from "@/lib/data";
+import { TEAM, teamEmail } from "@/lib/data";
 
 const PAGE_DESCRIPTION =
   "Meet the Mukrite Energies management team — combining energy sector operations, finance, marketing and partnerships expertise to build Uganda's clean-cooking transition.";
@@ -136,9 +136,9 @@ export default function TeamPage() {
           <div className="mt-14 grid gap-5 sm:grid-cols-2">
             {TEAM.map((m, i) => (
               <Reveal key={m.name} delay={(i % 2) * 0.1}>
-                <div className="group h-full overflow-hidden rounded-2xl border border-line bg-white transition-all hover:-translate-y-1.5 hover:shadow-brand-md">
-                  <div className="h-1.5 w-full bg-brand transition-colors group-hover:bg-ember" />
-                  <div className="p-8">
+                <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all hover:-translate-y-1.5 hover:shadow-brand-md">
+                  <div className="h-1.5 w-full shrink-0 bg-brand transition-colors group-hover:bg-ember" />
+                  <div className="flex flex-1 flex-col p-8">
                     <span className="flex size-14 items-center justify-center rounded-full bg-brand font-display text-lg font-bold tracking-wide text-white shadow-brand-sm transition-colors group-hover:bg-ember">
                       {m.initials}
                     </span>
@@ -148,9 +148,18 @@ export default function TeamPage() {
                     <p className="mt-1 font-body text-[0.7rem] font-bold uppercase tracking-[0.2em] text-ember">
                       {m.role}
                     </p>
-                    <p className="mt-3.5 font-body text-sm leading-relaxed text-mute">
+                    <p className="mb-6 mt-3.5 font-body text-sm leading-relaxed text-mute">
                       {m.bio}
                     </p>
+                    <a
+                      href={`mailto:${teamEmail(m)}?subject=${encodeURIComponent(
+                        `Enquiry for ${m.name}, ${m.role}`,
+                      )}`}
+                      className="mt-auto flex items-center gap-2 border-t border-line pt-5 font-body text-sm font-semibold text-brand transition-colors hover:text-ember"
+                    >
+                      <Mail className="size-4 shrink-0" />
+                      <span className="break-all">{teamEmail(m)}</span>
+                    </a>
                   </div>
                 </div>
               </Reveal>

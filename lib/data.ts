@@ -311,35 +311,47 @@ export const GALLERY = [
 ];
 
 /* ── Management team ── */
+/** Domain the role-based team mailboxes live on. Change here to update all of them. */
+export const MAIL_DOMAIN = "mukriteenergies.com";
+
 export type TeamMember = {
   name: string;
   initials: string;
   role: string;
+  /** Mailbox local-part; the address is `${mailbox}@${MAIL_DOMAIN}`. */
+  mailbox: string;
   bio: string;
 };
+
+/** Full address for a team member, e.g. md@mukriteenergies.com */
+export const teamEmail = (m: TeamMember) => `${m.mailbox}@${MAIL_DOMAIN}`;
 
 export const TEAM: TeamMember[] = [
   {
     name: "Mukhwana Ronald",
     initials: "MR",
+    mailbox: "md",
     role: "Managing Director",
     bio: "Leads Mukrite Energies' overall strategy and operations, driving the company's growth as a local LPG cylinder manufacturing and clean-cooking distribution enterprise.",
   },
   {
     name: "Namono Mary",
     initials: "NM",
+    mailbox: "finance",
     role: "Chief Finance Officer",
     bio: "Oversees the company's financial management and planning, supporting sustainable growth of the household and micro-hub distribution network.",
   },
   {
     name: "Ssegawa Solomon",
     initials: "SS",
+    mailbox: "marketing",
     role: "Marketing Lead",
     bio: "Drives market growth and customer engagement, building awareness of clean-cooking adoption among households and communities.",
   },
   {
     name: "Atukunda Haggai",
     initials: "AH",
+    mailbox: "partnerships",
     role: "Partnerships & Community Liaison",
     bio: "Builds and manages strategic partnerships that expand Mukrite Energies' reach and support delivery of its climate and community programmes.",
   },
