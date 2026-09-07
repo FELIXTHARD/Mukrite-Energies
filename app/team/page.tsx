@@ -52,7 +52,8 @@ export default function TeamPage() {
           </>
         }
         sub="Mukrite Energies is led by a management team combining energy sector operations, finance, marketing and partnerships expertise — united in building Uganda's clean-cooking transition."
-        image="/images/plant-team.jpeg"
+        image="/images/team-hero.jpeg"
+        imagePosition="center 38%"
       />
 
       {/* ── Intro ── */}
@@ -62,10 +63,10 @@ export default function TeamPage() {
             <Reveal direction="left" className="relative">
               <div className="relative overflow-hidden rounded-3xl">
                 <Image
-                  src="/images/plant-team.jpeg"
+                  src="/images/team-hero.jpeg"
                   alt="Mukrite Energies leadership at the cylinder store"
-                  width={760}
-                  height={950}
+                  width={641}
+                  height={1080}
                   className="aspect-[4/5] w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand/35" />

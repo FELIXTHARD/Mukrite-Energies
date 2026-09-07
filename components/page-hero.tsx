@@ -9,11 +9,13 @@ export function PageHero({
   title,
   sub,
   image = "/images/samples.jpeg",
+  imagePosition,
 }: {
   eyebrow: string;
   title: ReactNode;
   sub: string;
   image?: string;
+  imagePosition?: string;
 }) {
   return (
     <section className="relative mt-20 flex min-h-[52vh] items-end overflow-hidden bg-night pb-16 pt-24">
@@ -24,6 +26,7 @@ export function PageHero({
         priority
         sizes="100vw"
         className="object-cover"
+        style={imagePosition ? { objectPosition: imagePosition } : undefined}
       />
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10" />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 md:px-10">
